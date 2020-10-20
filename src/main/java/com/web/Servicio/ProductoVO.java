@@ -17,7 +17,7 @@ public class ProductoVO extends GenericoVO{
 
 	List <Producto> productos;
 
-	public ProductoVO(String mensaje, String codigo, List <Producto> productos) {
+	public ProductoVO(List <Producto> productos, String mensaje, String codigo) {
 		super(mensaje, codigo);
 		this.productos = productos;
 		// TODO Auto-generated constructor stub
