@@ -3,14 +3,14 @@ ALTER SCHEMA `proyecto_pos`  DEFAULT CHARACTER SET utf8  DEFAULT COLLATE utf8_ge
 use proyecto_pos;
 
 create table boleta(
-	id_boleta int not null,
+	id_boleta int not null auto_increment,
     fecha date not null,
     monto int not null,
     constraint pk_boleta primary key (id_boleta)
 );
 
 create table producto(
-	id_producto int not null,
+	id_producto int not null auto_increment,
     nombre varchar(50) not null,
     precio int not null,
     descripcion varchar(100),
@@ -18,10 +18,11 @@ create table producto(
 );
 
 create table item_boleta(
+	id_item_boleta int not null auto_increment,
 	id_boleta int not null,
     id_producto int not null,
     cantidad int not null,
-    constraint pk_item_boleta primary key (id_boleta, id_producto),
+    constraint pk_item_boleta primary key (id_item_boleta),
 	constraint fk_boleta foreign key (id_boleta) references boleta(id_boleta),
     constraint fk_producto foreign key (id_producto) references producto(id_producto)
 );

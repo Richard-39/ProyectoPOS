@@ -1,7 +1,7 @@
 package com.web.modelo;
 
-import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -18,13 +18,22 @@ import lombok.NoArgsConstructor;
 public class Boleta {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id_boleta")
 	private Integer idBoleta; 
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="fecha")
     private Date fecha;
     private Integer monto;
     
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "boleta", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name="id_boleta")
     List<ItemBoleta> itemBoleta = new ArrayList<ItemBoleta>();
 	
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "boleta", cascade = CascadeType.ALL)
+//    List<ItemBoleta> itemBoleta = new ArrayList<ItemBoleta>();
+    
     public static Integer calcularMonto(List<ItemBoleta> listaItemBoleta) {
     	Integer monto = 0;
 		for (ItemBoleta itemBoleta : listaItemBoleta) {
@@ -32,12 +41,9 @@ public class Boleta {
 		}
     	return monto;
     }
-
-	@Override
-	public String toString() {
-		return "Boleta [idBoleta=" + idBoleta + ", fecha=" + fecha + ", monto=" + monto + "]";
-	}
     
-    
+    public void addItemBoleta(ItemBoleta itemBoleta) {
+    	this.itemBoleta.add(itemBoleta);
+    }
     
 }
