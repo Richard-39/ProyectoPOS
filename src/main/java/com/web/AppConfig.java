@@ -19,8 +19,7 @@ public class AppConfig {
 	Environment environment;
 	@Bean
 	DataSource dataSource() {
-	DriverManagerDataSource driverManagerDataSource = new
-	DriverManagerDataSource();
+	DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 	driverManagerDataSource.setUrl(environment.getProperty("url"));
 	driverManagerDataSource.setUsername(environment.getProperty("usuario"));
 	driverManagerDataSource.setPassword(environment.getProperty("clave"));

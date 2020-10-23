@@ -22,33 +22,37 @@ public class ProductoServicioImpl implements ProductoServicio {
 
 	@Override
 	public ProductoVO getAllProductos() {
+		log.info("entrando a getAllProductos");
 		respuesta = new ProductoVO(new ArrayList<Producto>(), "Ha ocurrido un error", "101");
 		try {
+			log.info("recuperando lista de productos");
 			respuesta.setProductos((List<Producto>) dao.findAll());
+			System.out.println(respuesta.getProductos());
 			respuesta.setMensaje(String.format("Se ha/n encontrado %d registro/s", respuesta.getProductos().size()));
 			respuesta.setCodigo("0");
 		} catch (Exception e) {
 			log.trace("Usuario Service: Error en getAllProductos", e);
 		}
+		log.info("saliendo de getALlProductos");
 		return respuesta;
 
 	}
 
 	@Override
 	public ProductoVO findByNombre(String nombre) {
-		respuesta = new ProductoVO(new ArrayList<Producto>(), "Ha ocurrido un error", "102" );
-				try {
-				List<Producto> productos = dao.findByNombre(nombre);
-				if(productos.size()>0) {
-				respuesta.setProductos(productos);
-				respuesta.setMensaje("Producto encontrado correctamente.");
-				respuesta.setCodigo("0");
-				}else {
-				respuesta.setMensaje("Producto no encontrado.");
-				}
-				} catch (Exception e) {
-				log.trace("Producto Service: Error en findByNombre", e);
-				}
+//		respuesta = new ProductoVO(new ArrayList<Producto>(), "Ha ocurrido un error", "102" );
+//				try {
+//				List<Producto> productos = dao.findByNombre(nombre);
+//				if(productos.size()>0) {
+//				respuesta.setProductos(productos);
+//				respuesta.setMensaje("Producto encontrado correctamente.");
+//				respuesta.setCodigo("0");
+//				}else {
+//				respuesta.setMensaje("Producto no encontrado.");
+//				}
+//				} catch (Exception e) {
+//				log.trace("Producto Service: Error en findByNombre", e);
+//				}
 				return respuesta;
 	}
 
