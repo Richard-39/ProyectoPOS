@@ -2,9 +2,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title th:text="${titulo}">Insert title here</title>
 </head>
 <body>
-<h3>Productos</h3>
+	<h3 th:text="${titulo}"></h3>
+	<table>
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nombre</th>
+				<th>Precio</th>
+				<th>Descripcion</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="producto:${productos}">
+				<td th:text="${producto.nombre}"></td>
+				<td th:text="${producto.precio}"></td>
+				<td th:text="${producto.descripcion}"></td>
+			</tr>
+		</tbody>
+	</table>
 </body>
 </html>
