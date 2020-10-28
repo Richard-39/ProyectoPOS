@@ -11,6 +11,5 @@ import com.web.modelo.Producto;
 @Repository
 public interface ProductoRepositorio extends JpaRepository<Producto, Integer> {
 
-//	@Query("SELECT * FROM productos WHERE nombre LIKE '%nombre%'" )
-//	public List<Producto> findByNombre(String nombre);
+	public List<Producto> findByNombreLike(String nombre);
 }
