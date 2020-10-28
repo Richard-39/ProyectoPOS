@@ -11,7 +11,7 @@ create table boleta(
 
 create table producto(
 	id_producto int not null auto_increment,
-    nombre varchar(50) not null,
+    nombre varchar(70) not null,
     precio int not null,
     descripcion varchar(100),
     constraint pk_producto primary key (id_producto)

@@ -6,9 +6,10 @@ import com.web.vo.ProductoVO;
 public interface IProducto {
 
 	public ProductoVO findAll();
-	public ProductoVO findById(Integer id);
+	public ProductoVO findByNombre(String nombre);
 	public ProductoVO save(Producto producto);
-	public ProductoVO delete(Integer id);
-	
+	public ProductoVO update(Producto producto);
+	public ProductoVO delete(Producto producto);
+	public ProductoVO findById(Integer id);
 	
 }

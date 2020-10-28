@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.web.modelo.Producto;
-import com.web.repositorio.ProductoRepositorio;
 import com.web.dao.BoletaDao;
 import com.web.dao.ProductoDao;
 import com.web.modelo.Boleta;

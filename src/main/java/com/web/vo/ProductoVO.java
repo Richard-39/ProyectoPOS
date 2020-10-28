@@ -6,11 +6,13 @@ import com.web.modelo.Producto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class ProductoVO extends GenericVO {
 
 	private List<Producto> productos;
