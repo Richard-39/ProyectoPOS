@@ -28,13 +28,13 @@ public class ItemBoleta implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id_item_boleta")
 	private Integer id_item_boleta;
-	
-    @Column(name = "cantidad")
-    private Integer cantidad;
-    
+	   
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_producto")
     private Producto producto;
+    
+    @Column(name = "cantidad")
+    private Integer cantidad;
 
 	public ItemBoleta() {
 		super();
@@ -42,6 +42,12 @@ public class ItemBoleta implements Serializable {
 	
 	public Integer carcularSubTotal() {
 		return producto.getPrecio() * cantidad;
+	}
+
+	public ItemBoleta(Producto producto, Integer cantidad) {
+		super();
+		this.cantidad = cantidad;
+		this.producto = producto;
 	}
 
 	private static final long serialVersionUID = 1L;

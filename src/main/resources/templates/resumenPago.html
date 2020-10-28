@@ -7,9 +7,29 @@
 <body>
 	<h1>Resumen Pago</h1>
 	
-	<p th:text="${formaPago}"> 
-	<p th:text="${efectivoRecibido}"> 
-	<p th:text="${total}"> 
+	<p th:text="${boleta.fecha}"> 
+	<p th:text="${boleta.monto}"> 
+
+	<h3>Items</h3>
 	
+	<table>
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>precio</th>
+                    <th>Cantidad</th>
+                    <th>SubTotal</th> 
+                </tr>
+            </thead>
+            <tbody>
+				<tr th:each="item, itemStat : ${boleta.itemBoleta}">
+				    <td th:text="${item.producto.nombre}"/>
+				    <td th:text="${item.producto.precio}"/>
+				    <td th:text="${item.cantidad}"/>
+				    <td th:text="${item.carcularSubTotal()}"/>
+				</tr>
+            </tbody>
+        </table>
+
 </body>
 </html>

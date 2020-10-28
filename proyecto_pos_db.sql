@@ -3,7 +3,7 @@ ALTER SCHEMA `proyecto_pos`  DEFAULT CHARACTER SET utf8  DEFAULT COLLATE utf8_ge
 use proyecto_pos;
 
 create table boleta(
-	id_boleta int not null auto_increment,
+	id_boleta int auto_increment,
     fecha date not null,
     monto int not null,
     constraint pk_boleta primary key (id_boleta)
@@ -18,8 +18,8 @@ create table producto(
 );
 
 create table item_boleta(
-	id_item_boleta int not null auto_increment,
-	id_boleta int not null,
+	id_item_boleta int auto_increment,
+	id_boleta int,
     id_producto int not null,
     cantidad int not null,
     constraint pk_item_boleta primary key (id_item_boleta),
@@ -28,16 +28,16 @@ create table item_boleta(
 );
 
 -- productos
-INSERT INTO `proyecto_pos`.`producto` (`id_producto`, `nombre`, `precio`, `descripcion`) VALUES ('1', 'Cocaloca 1 LT retornable', '1990', 'Bebida de fantasía');
-INSERT INTO `proyecto_pos`.`producto` (`id_producto`, `nombre`, `precio`, `descripcion`) VALUES ('2', 'Galletas triton 10 un.', '990', 'Galleta sabor chocolate');
-INSERT INTO `proyecto_pos`.`producto` (`id_producto`, `nombre`, `precio`, `descripcion`) VALUES ('3', 'Chocolate trensito 300 g', '1490', 'Chocolate sucedaneo a base de manteca');
-INSERT INTO `proyecto_pos`.`producto` (`id_producto`, `nombre`, `precio`, `descripcion`) VALUES ('4', 'Pan ideal 20 un.', '2390', 'Bolsa de pan de molde');
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Cocaloca 1 LT retornable', '1990', 'Bebida de fantasía');
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Galletas triton 10 un.', '990', 'Galleta sabor chocolate');
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Chocolate trensito 300 g', '1490', 'Chocolate sucedaneo a base de manteca');
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Pan ideal 20 un.', '2390', 'Bolsa de pan de molde');
 
 -- boletas
-INSERT INTO `proyecto_pos`.`boleta` (`id_boleta`, `fecha`, `monto`) VALUES ('1', '2020-10-19', '1990');
-INSERT INTO `proyecto_pos`.`boleta` (`id_boleta`, `fecha`, `monto`) VALUES ('2', '2020-10-18', '1980');
-INSERT INTO `proyecto_pos`.`boleta` (`id_boleta`, `fecha`, `monto`) VALUES ('3', '2020-10-17', '7170');
-INSERT INTO `proyecto_pos`.`boleta` (`id_boleta`, `fecha`, `monto`) VALUES ('4', '2020-10-16', '5960');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-19', '1990');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-18', '1980');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-17', '7170');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-16', '5960');
 
 -- item boleta
 INSERT INTO `proyecto_pos`.`item_boleta` (`id_boleta`, `id_producto`, `cantidad`) VALUES ('1', '1', '1');

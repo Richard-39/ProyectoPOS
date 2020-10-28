@@ -6,42 +6,34 @@
 </head>
 <body>
 	<h1>Carro de compra</h1>
-	
-	<table class="table">
-	  <thead>
-	    <tr>
-	      <th scope="col">Id Producto</th>
-	      <th scope="col">Nombre</th>
-	      <th scope="col">Precio</th>
-	      <th scope="col">Cantidad</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-		<tr th:each="itemBoleta : ${listaItemBoleta}"> 
-			<th th:text=${itemBoleta.producto.idProducto}> 
-			<th th:text=${itemBoleta.producto.nombre}>
-			<th th:text=${itemBoleta.producto.precio}>
-			<th th:text=${itemBoleta.cantidad}>
-		<tr>
-	  </tbody>
-	</table>
-	
-	<form th:action="@{/carroCompra/resumenPago}" method="POST">
-	
-	<input type="text" name="total" th:value="${total}">
-	
-	  <div class="form-group">
-	    <label for="formaPago">Forma de Pago</label>
-	    <input type="radio" name="formaPago" value="efectivo">
-	  	<label for="efectivo">Efectivo</label><br>
-	  </div>
-	  
-	  <div class="form-group">
-	    <label for="efectivoRecibido">Efectivo Recibido</label>
-	    <input type="text" class="form-control" id="efectivoRecibido" name="efectivoRecibido">
-	  </div>
-
-	  <button type="submit" class="btn btn-primary">Confirmar Pago</button>
+		
+	<form th:action="@{/carroCompra/resumenPago}" method="POST" th:object="${boleta}">
+	    <fieldset>
+	        <button type="submit" class="btn btn-primary">Confirmar Pago</button>
+	        <table>
+	            <thead>
+	                <tr>
+	                    <th>Producto</th>
+	                    <th>precio</th>
+	                    <th>Cantidad</th>
+	                    <th>SubTotal</th> 
+	                </tr>
+	            </thead>
+	            <tbody>
+					<tr th:each="item, itemStat : ${boleta.itemBoleta}">
+						<td hidden>
+					        <input hidden th:name="|itemBoleta[${itemStat.index}].producto.idProducto|" th:value="${item.producto.idProducto}" readonly/>
+					    </td>
+					    <td th:text="${item.producto.nombre}"/>
+					    <td th:text="${item.producto.precio}"/>
+					    <td>
+					        <input th:name="|itemBoleta[${itemStat.index}].cantidad|" th:value="${item.cantidad}"/>
+					    </td>
+					    <td th:text="${item.carcularSubTotal()}"/>
+					</tr>
+	            </tbody>
+	        </table>
+	    </fieldset>
 	</form>
 	
 	

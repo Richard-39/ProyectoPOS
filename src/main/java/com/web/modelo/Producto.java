@@ -15,10 +15,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Table(name="producto")
 public class Producto implements Serializable {
-
 
 		@Id
 	    @Column(name = "id_producto")
@@ -27,16 +27,7 @@ public class Producto implements Serializable {
 	    private String nombre;
 	    private Integer precio;
 	    private String descripcion;
-	    
-	    
-	    
-//	    @OneToMany(mappedBy = "producto")
-//	    List<ItemBoleta> itemBoleta = new ArrayList<ItemBoleta>();
-	    
-//	    @OneToMany(fetch = FetchType.EAGER, mappedBy = "producto", cascade = CascadeType.ALL)
-//	    List<ItemBoleta> itemBoleta = new ArrayList<ItemBoleta>();
 
-	    
 		private static final long serialVersionUID = 1L;
 	}
 	
