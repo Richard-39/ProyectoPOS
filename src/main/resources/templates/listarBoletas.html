@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Listado Boletas</title>
+</head>
+<body>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Monto</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="boleta: ${listaBoletas}">
+      <th scope="row" th:text="${boleta.idBoleta}" />
+      <td th:text="${boleta.fecha}"/>
+      <td th:text="${boleta.monto}"/>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>

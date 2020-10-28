@@ -16,17 +16,19 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 public class AppConfig {
 	
 	@Autowired
-	Environment environment;
+	Environment ambiente;
+	
 	@Bean
-	DataSource dataSource() {
-	DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
-	driverManagerDataSource.setUrl(environment.getProperty("url"));
-	driverManagerDataSource.setUsername(environment.getProperty("usuario"));
-	driverManagerDataSource.setPassword(environment.getProperty("clave"));
-	driverManagerDataSource.setDriverClassName(environment.getProperty("driver")
-	);
-	return driverManagerDataSource;
+	public DataSource pool() {
+		DriverManagerDataSource dmds = new DriverManagerDataSource();
+		dmds.setUsername(ambiente.getProperty("usuario"));
+		dmds.setPassword(ambiente.getProperty("clave"));
+		dmds.setDriverClassName(ambiente.getProperty("driver"));
+		dmds.setUrl(ambiente.getProperty("url"));
+		return dmds;
+		
 	}
+
 }
 
 

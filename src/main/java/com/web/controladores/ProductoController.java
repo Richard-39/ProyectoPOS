@@ -5,8 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.web.Servicio.ProductoServicio;
-import com.web.Servicio.ProductoVO;
+import com.web.servicio.ProductoServicio;
+import com.web.servicio.ProductoVO;
 
 @Controller
 public class ProductoController {

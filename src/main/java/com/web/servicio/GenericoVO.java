@@ -1,4 +1,4 @@
-package com.web.Servicio;
+package com.web.servicio;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

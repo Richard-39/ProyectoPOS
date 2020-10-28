@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Carro de Compra</title>
+</head>
+<body>
+	<h1>Carro de compra</h1>
+		
+	<form th:action="@{/carroCompra/resumenPago}" method="POST" th:object="${boleta}">
+	    <fieldset>
+	        <button type="submit" class="btn btn-primary">Confirmar Pago</button>
+	        <table>
+	            <thead>
+	                <tr>
+	                    <th>Producto</th>
+	                    <th>precio</th>
+	                    <th>Cantidad</th>
+	                    <th>SubTotal</th> 
+	                </tr>
+	            </thead>
+	            <tbody>
+					<tr th:each="item, itemStat : ${boleta.itemBoleta}">
+						<td hidden>
+					        <input hidden th:name="|itemBoleta[${itemStat.index}].producto.idProducto|" th:value="${item.producto.idProducto}" readonly/>
+					    </td>
+					    <td th:text="${item.producto.nombre}"/>
+					    <td th:text="${item.producto.precio}"/>
+					    <td>
+					        <input th:name="|itemBoleta[${itemStat.index}].cantidad|" th:value="${item.cantidad}"/>
+					    </td>
+					    <td th:text="${item.carcularSubTotal()}"/>
+					</tr>
+	            </tbody>
+	        </table>
+	    </fieldset>
+	</form>
+	
+	
+</body>
+</html>
