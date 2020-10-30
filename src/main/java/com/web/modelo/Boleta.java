@@ -27,6 +27,9 @@ public class Boleta {
     private Date fecha;
     private Integer monto;
     
+    @Column(name="forma_pago")
+    private String formaPago;
+    
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="id_boleta")
     List<ItemBoleta> itemBoleta = new ArrayList<ItemBoleta>();

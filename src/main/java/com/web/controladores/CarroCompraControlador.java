@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,11 +53,24 @@ public class CarroCompraControlador {
 		return "carroCompra";
 	} 
 	
+	@GetMapping("/agregarProducto")
+	public String agregarProducto(Model model, @PathVariable Integer id) {
+		
+		// toma el id y lo busca en la base de datos y trae el producto que corresponde
+		// toma el producto y lo guarda en una lista de producto (item producto)
+		// se regresa a la lista de productos
+		
+		return "redirect: /listarProductos";
+	} 
+	
 	@PostMapping("/resumenPago")
-	public String saveBooks(@ModelAttribute Boleta boleta, Model model) {
+	public String saveBooks(@ModelAttribute Boleta boleta, Model model, @RequestParam Integer montoPago) {
 		for (ItemBoleta iterable_element : boleta.getItemBoleta()) {
 			System.out.println(iterable_element);
 		}
+		
+		System.out.println("monto pago: " + montoPago);
+		System.out.println("forma pago: " + boleta.getFormaPago());
 		
 		for (ItemBoleta item : boleta.getItemBoleta()) {
 			item.setProducto(productoServicio.findById(item.getProducto().getIdProducto()).getProductos().get(0));
@@ -64,7 +78,7 @@ public class CarroCompraControlador {
 		
 		boleta.setFecha(new Date());
 		boleta.setMonto(Boleta.calcularMonto(boleta.getItemBoleta()));
-		boletaServicio.save(boleta);
+//		boletaServicio.save(boleta);
 		
 		model.addAttribute("boleta", boleta);
 		
