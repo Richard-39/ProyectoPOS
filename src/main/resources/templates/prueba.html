@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+	Esta funcionando!
+	<div th:each="item:${itemsBoleta}">
+		<p th:text="${item.producto.nombre}"></p>
+		<p th:text="${item.id_item_boleta}"></p>
+		<p th:text="${item.cantidad}"></p>
+</body>
+</html>

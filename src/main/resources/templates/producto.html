@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -7,8 +7,11 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
 	integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 	crossorigin="anonymous">
+<script> function myFuncion(id){
+    window.location.href = "/carroCompra?id=" + 
+}</script>
 <meta charset="UTF-8">
-<title th:text="${titulo}">Insert title here</title>
+<title th:text="${titulo}"></title>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -45,23 +48,31 @@
 	</nav>
 	<h3 th:text="${titulo}"></h3>
 	<div class="card-deck">
-	
-				<div th:each="producto:${productos}" class="card col-sm-4">
-				
-					<div class="card-header">
-						<h5 th:text="${producto.nombre}"></h5>
-					</div>
-					<div class="card-body">
-						<h5 th:text=" '$'+${producto.precio}"></h5>
-						<img src="..." class="card-img-top" alt="...">
-					</div>
 
-					<div class="card-footer">
-						<a class="btn btn-outline-info">Agregar a Carrito</a> 
+		<div th:each="producto:${productos}" class="card col-sm-4">
+
+			<div class="card-header">
+				<h5 th:text="${producto.nombre}"></h5>
+			</div>
+			<div class="card-body">
+				<h5 th:text=" '$'+${producto.precio}"></h5>
+				<img src="..." class="card-img-top" alt="...">
+			</div>
+
+			<div class="card-footer">
+			<form th:action="@{/carroCompra/agregarCarro}" method="get" >
+				<div class="container">
+					<div class="row">
+						<input class="form-control col-sm-2" type="text" name="cantidad"> 
+						<input  th:value="${producto.idProducto}" type="text" name="idProducto" readonly>
+						<div class="col-sm-2"></div>
+						<button type="submit" class="btn btn-primary col-sm-8">Agregar</button>
 					</div>
 				</div>
+				</form>
 			</div>
-			
+		</div>
+	</div>
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 		crossorigin="anonymous"></script>
