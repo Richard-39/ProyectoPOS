@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
@@ -22,7 +23,9 @@ import com.web.modelo.Boleta;
 import com.web.modelo.ItemBoleta;
 import com.web.modelo.Producto;
 import com.web.servicio.IBoleta;
+import com.web.servicio.ICarroCompra;
 import com.web.servicio.IProducto;
+import com.web.vo.ProductoVO;
 
 @Controller
 @RequestMapping("/carroCompra")
@@ -34,21 +37,31 @@ public class CarroCompraControlador {
 	@Autowired
 	IProducto productoServicio;
 	
-	@GetMapping({"/", ""})
+	@Autowired
+	ICarroCompra carroCompraServicio;
+	
+	
+	@GetMapping("/agregarCarro")
+	public String agregarCarro(@RequestParam Integer idProducto,@RequestParam Integer cantidad, Model model ) {
+		ProductoVO  productoVo = productoServicio.findById(idProducto);
+		Producto producto = productoVo.getProductos().get(0);
+		ItemBoleta itemBoleta = new ItemBoleta();
+		itemBoleta.setProducto(producto);
+		itemBoleta.setCantidad(cantidad);
+		carroCompraServicio.agregarItem(itemBoleta);
+		System.out.println(carroCompraServicio.obtenerItems());
+	
+	return "forward:/listarProductos";
+	}
+	
+	@GetMapping("/")
 	public String carroCompra(Model model) {
 		
-		ItemBoleta itemBoleta1 = new ItemBoleta(new Producto(1, "Cocaloca 1 LT retornable", 1990, "Bebida de fantasía"), 2);
-		ItemBoleta itemBoleta2= new ItemBoleta(new Producto(2, "Galletas triton 10 un.", 990, "Galleta sabor chocolate"), 1);
-		ItemBoleta itemBoleta3 = new ItemBoleta(new Producto(3, "Chocolate trensito 300 g", 1490, "Chocolate sucedaneo a base de manteca"), 3);
-		ItemBoleta itemBoleta4 = new ItemBoleta(new Producto(4, "Pan ideal 20 un.", 2390, "Bolsa de pan de molde"), 1);
-		
-		List<ItemBoleta> listaItemBoleta = new ArrayList<ItemBoleta>(Arrays.asList(itemBoleta1, itemBoleta2, itemBoleta3, itemBoleta4));
-		
 		Boleta boleta = new Boleta();
-		boleta.setItemBoleta(listaItemBoleta);
+		boleta.setItemBoleta(carroCompraServicio.obtenerItems());
 		
 		model.addAttribute("boleta", boleta);
-		model.addAttribute("total", Boleta.calcularMonto(listaItemBoleta));
+		model.addAttribute("total", Boleta.calcularMonto(carroCompraServicio.obtenerItems()));
 		
 		return "carroCompra";
 	} 
