@@ -13,4 +13,6 @@ public interface ICarroCompra {
 	
 	public List<ItemBoleta> obtenerItems();
 	
+	public void eliminarProducto(Integer idProducto);
+	
 }

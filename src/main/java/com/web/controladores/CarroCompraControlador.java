@@ -1,24 +1,18 @@
 package com.web.controladores;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.List;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
-import com.web.dao.BoletaDao;
 import com.web.modelo.Boleta;
 import com.web.modelo.ItemBoleta;
 import com.web.modelo.Producto;
@@ -40,6 +34,13 @@ public class CarroCompraControlador {
 	@Autowired
 	ICarroCompra carroCompraServicio;
 	
+	@PostConstruct
+	public void prductoInicialCarro() {
+		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(1).getProductos().get(0), 2));
+		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(2).getProductos().get(0), 3));
+		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(3).getProductos().get(0), 1));
+		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(4).getProductos().get(0), 5));
+	}
 	
 	@GetMapping("/agregarCarro")
 	public String agregarCarro(@RequestParam Integer idProducto,@RequestParam Integer cantidad, Model model ) {
@@ -54,9 +55,9 @@ public class CarroCompraControlador {
 	return "forward:/listarProductos";
 	}
 	
-	@GetMapping("/")
+	@GetMapping({"/", ""})
 	public String carroCompra(Model model) {
-		
+			
 		Boleta boleta = new Boleta();
 		boleta.setItemBoleta(carroCompraServicio.obtenerItems());
 		
@@ -65,16 +66,12 @@ public class CarroCompraControlador {
 		
 		return "carroCompra";
 	} 
-	
-	@GetMapping("/agregarProducto")
-	public String agregarProducto(Model model, @PathVariable Integer id) {
-		
-		// toma el id y lo busca en la base de datos y trae el producto que corresponde
-		// toma el producto y lo guarda en una lista de producto (item producto)
-		// se regresa a la lista de productos
-		
-		return "redirect: /listarProductos";
-	} 
+
+	@GetMapping("/eliminarProducto")
+	public String eliminarProducto(@RequestParam Integer idProducto) {
+		carroCompraServicio.eliminarProducto(idProducto);
+		return "forward:/carroCompra/";
+	}
 	
 	@PostMapping("/resumenPago")
 	public String saveBooks(@ModelAttribute Boleta boleta, Model model, @RequestParam Integer montoPago) {
@@ -91,9 +88,12 @@ public class CarroCompraControlador {
 		
 		boleta.setFecha(new Date());
 		boleta.setMonto(Boleta.calcularMonto(boleta.getItemBoleta()));
-//		boletaServicio.save(boleta);
-		
+		boletaServicio.save(boleta);
 		model.addAttribute("boleta", boleta);
+		model.addAttribute("montoPago", montoPago);
+		model.addAttribute("vuelto", montoPago - boleta.getMonto());
+		
+		carroCompraServicio.limpiarCarro();
 		
 	    return "resumenPago";
 	}
