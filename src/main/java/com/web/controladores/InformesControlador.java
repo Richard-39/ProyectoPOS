@@ -8,7 +8,12 @@ import java.time.YearMonth;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.web.modelo.Boleta;
+import com.web.modelo.ItemBoleta;
+import com.web.modelo.Producto;
 import com.web.servicio.IBoleta;
 
 @RequestMapping("/informes")
@@ -31,7 +38,7 @@ public class InformesControlador {
 	Comparator<Boleta> compareByMonto = (Boleta o1, Boleta o2) -> o1.getMonto().compareTo( o2.getMonto());
 	
 	@GetMapping({"/ventaPorDia", "/", ""})
-	public String ventaPorDia(Model model, @RequestParam(required = false) String fecha, @RequestParam(required = false) String orderBy) throws ParseException {
+	public String ventaPorDia(Model model, @RequestParam(required = false) String fecha, @RequestParam(required = false) String orderBy, @RequestParam(required = false) String orderMode) throws ParseException {
 		if (fecha == null) {
 			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			fecha = dateFormat.format(Calendar.getInstance().getTime());
@@ -40,19 +47,24 @@ public class InformesControlador {
 		if (orderBy == null) {
 			orderBy = "fecha";
 		}
-				
+		
+		if (orderMode == null) {
+			orderMode = "ascendente";
+		}
+			
 //		List<Boleta> boletas = boletaServicio.findAllByFecha(new SimpleDateFormat("yyyy-MM-dd").parse("2020-11-05")).getBoletas();
 		List<Boleta> boletas = boletaServicio.findAllByFecha(new SimpleDateFormat("yyyy-MM-dd").parse(fecha)).getBoletas();
 		
+		Integer total = calcularTotal(boletas);
 		
-		if (orderBy.equals("fecha")) {
-			Collections.sort(boletas, compareByFecha.reversed());
-		} else if (orderBy.equals("monto")) {
-			Collections.sort(boletas, compareByMonto.reversed());
-		}
+		LinkedHashMap<Producto, Integer> productos =  ordenarProductos(boletas);
+		
+		ordenarBoletas(orderBy, orderMode, boletas);
 				
 		model.addAttribute("boletas", boletas);
 		model.addAttribute("tipoBusqueda", "Día");
+		model.addAttribute("productos", productos);
+		model.addAttribute("total", total);
 		
 		return "informes";
 	}
@@ -67,6 +79,10 @@ public class InformesControlador {
 		List<Boleta> boletas = boletaServicio.findAllByFechaTimeBetween(
 				(new SimpleDateFormat("yyyy-MM-dd").parse(start.toString())), 
 				(new SimpleDateFormat("yyyy-MM-dd").parse(stop.toString()))).getBoletas();
+		
+		Integer total = calcularTotal(boletas);
+		
+		LinkedHashMap<Producto, Integer> productos =  ordenarProductos(boletas);
 		
 		if (orderBy.equals("fecha")) {
 			if (orderMode.equals("ascendente")) {
@@ -84,6 +100,8 @@ public class InformesControlador {
 		
 		model.addAttribute("boletas", boletas);
 		model.addAttribute("tipoBusqueda", "Mes");
+		model.addAttribute("productos", productos);
+		model.addAttribute("total", total);
 		
 		return "informes";
 	}
@@ -96,10 +114,16 @@ public class InformesControlador {
 				(new SimpleDateFormat("yyyy-MM-dd").parse(periodoDateEnd)))
 				.getBoletas();
 		
+		Integer total = calcularTotal(boletas);
+		
+		LinkedHashMap<Producto, Integer> productos =  ordenarProductos(boletas);
+		
 		ordenarBoletas(orderBy, orderMode, boletas);
 		
 		model.addAttribute("boletas", boletas);
 		model.addAttribute("tipoBusqueda", "Periodo");
+		model.addAttribute("productos", productos);
+		model.addAttribute("total", total);
 		
 		return "informes";
 	}
@@ -118,6 +142,36 @@ public class InformesControlador {
 				Collections.sort(boletas, compareByMonto.reversed());
 			}
 		}
+	}
+	
+	private LinkedHashMap<Producto, Integer> ordenarProductos(List<Boleta> boletas){
+		
+		Map<Producto, Integer> productoCantidad = new HashMap<Producto, Integer>();
+		for (Boleta boleta : boletas) {
+			for (ItemBoleta itemBoleta : boleta.getItemBoleta()) {
+				if(productoCantidad.containsKey(itemBoleta.getProducto())){
+					productoCantidad.put(itemBoleta.getProducto(), productoCantidad.get(itemBoleta.getProducto()) + itemBoleta.getCantidad()) ;
+				} else {
+					productoCantidad.put(itemBoleta.getProducto(), itemBoleta.getCantidad());
+				}
+			}
+		}
+		
+		LinkedHashMap<Producto, Integer> sortedMap = 
+				productoCantidad.entrySet().stream().
+			    sorted(Entry.<Producto, Integer>comparingByValue().reversed()).
+			    collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+			                             (e1, e2) -> e1, LinkedHashMap::new));
+		
+		return sortedMap;
+	}
+	
+	private Integer calcularTotal(List<Boleta> boletas) {
+		Integer total = 0;
+		for (Boleta boleta : boletas) {
+			total += Boleta.calcularMonto(boleta.getItemBoleta());
+		}
+		return total;
 	}
 	
 }
