@@ -26,6 +26,7 @@ import com.web.modelo.Boleta;
 import com.web.modelo.ItemBoleta;
 import com.web.modelo.Producto;
 import com.web.servicio.IBoleta;
+import com.web.vo.BoletaVO;
 
 @RequestMapping("/informes")
 @Controller
@@ -126,6 +127,15 @@ public class InformesControlador {
 		model.addAttribute("total", total);
 		
 		return "informes";
+	}
+	
+	@GetMapping("/boleta")
+	public String verBoleta(Model model, @RequestParam Integer idBoleta) {
+		BoletaVO boleta = boletaServicio.findById(idBoleta);
+		model.addAttribute("boleta", boleta.getBoletas().get(0));
+		model.addAttribute("mensaje", boleta.getMensaje());
+		model.addAttribute("codigo", boleta.getCodigo());
+		return "verBoleta";
 	}
 	
 	private void ordenarBoletas(String orderBy, String orderMode, List<Boleta> boletas) {

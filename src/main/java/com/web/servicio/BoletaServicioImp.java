@@ -39,8 +39,15 @@ public class BoletaServicioImp implements IBoleta{
 
 	@Override
 	public BoletaVO findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		BoletaVO boletaVo = new BoletaVO("Ha ocurrido un error", "102", new ArrayList<Boleta>());
+		try {
+			boletaVo.getBoletas().add(boletaDao.findById(id).get());
+			boletaVo.setMensaje(String.format("Se han encontrado %d registros.", boletaVo.getBoletas().size()));
+			boletaVo.setCodigo("0");
+		} catch (Exception e) {
+			log.info("Se ha encontrado un error en BoletaServicioImp : findById " + e);
+			}
+		return boletaVo;
 	}
 
 	@Override
