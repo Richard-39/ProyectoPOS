@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+	
+	<!-- 	jquery -->
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+	
+	<title>Informes</title>
+	
+	<script type="text/javascript">
+		
+	function dia() {
+		document.getElementById("dropdownMenuButton").innerHTML = "Día";
+		$('#busquedaDia').modal();
+	}
+	
+	function mes() {
+		document.getElementById("dropdownMenuButton").innerHTML = "Mes";
+		$('#busquedaMes').modal();
+	}
+	
+	function periodo() {
+		document.getElementById("dropdownMenuButton").innerHTML = "Periodo";
+		$('#busquedaPeriodo').modal();
+	}
+		
+	</script>	
+	
+</head>
+<body>
+
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Proyecto POS</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="/inicio">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="/listarProductos">Productos</a></li>
+                <li class="nav-item"><a class="nav-link" href="/carroCompra">Carro de Compra</a></li>
+                <li class="nav-item active"><a class="nav-link" href="/informes">Informes</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container mt-4">
+    
+    <div class="row my-5">
+    	 <div class="col-6">
+    	 	<h3>Informe de Ventas</h3>
+    	</div>
+    	<div class="col-2">
+    	 <div class="form-group col-md-3">
+		    <div class="dropdown">
+			  <button th:text="${tipoBusqueda}" class="btn btn-secondary dropdown-toggle btn-lg" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="dia">
+			  </button>
+			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+			    <a class="dropdown-item" onclick="dia()">Dia</a>
+			    <a class="dropdown-item" onclick="mes()">Mes</a>
+			    <a class="dropdown-item" onclick="periodo()">Periodo</a>
+			  </div>
+			</div>
+	     </div>
+    	</div>
+    	
+    	<div class="col-4">
+			<div class="card mx-auto text-center" style="width: 17rem;">
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item"><span class="font-weight-bold h4" th:text="'Total:  '"></span><span class="h3" th:text="${#numbers.formatInteger(total,3,'POINT')}"></span></li>
+			  </ul>
+			</div>
+    	</div>
+    	
+    </div>
+    
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+		  <li class="nav-item" role="presentation">
+		    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Ventas</a>
+		  </li>
+		  <li class="nav-item" role="presentation">
+		    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Productos</a>
+		  </li>
+		</ul>
+		<div class="tab-content" id="myTabContent">
+		  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+		  
+			<!-- tabla ventas -->
+			<table class="table my-3">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th class="text-center" scope="col">Id</th>
+			      <th class="text-center" scope="col">Fecha</th>
+			      <th class="text-center" scope="col">Forma Pago</th>
+			      <th class="text-center" scope="col">Monto</th>
+			      <th></th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="boleta : ${boletas}">
+			      <th class="text-center" scope="row" th:text="${boleta.idBoleta}"></th>
+			      <td class="text-center" th:text="${boleta.fecha}"></td>
+			      <td class="text-center" th:text="${#strings.capitalize(boleta.formaPago)}"></td>
+			      <td class="text-center" th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></td>
+			      <td class="text-center"> <a th:href="@{/informes/boleta?idBoleta=} + ${boleta.idBoleta}" th:text="'Ver Boleta'" target="_blank"></a></td>
+			    </tr>
+			  </tbody>
+			</table>
+		  </div>
+		  
+		  <!-- tabla productos -->
+		  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+		  
+		  	<table class="table my-3">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">Nombre</th>
+			      <th scope="col">Descripción</th>
+			      <th class="text-center" scope="col">Precio</th>
+			      <th class="text-center" scope="col">Cantidad</th>
+			      <th class="text-right" scope="col">Total Vendido</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr th:each="producto : ${productos}">
+			      <th scope="row" th:text="${producto.key.nombre}"></th>
+			      <td th:text="${producto.key.descripcion}"></td>
+			      <td class="text-center" th:text="${#numbers.formatInteger(producto.key.precio,3,'POINT')}"></td>
+			      <td class="text-center" th:text="${#numbers.formatInteger(producto.value,3,'POINT')}"></td>
+			      <td class="text-right" th:text="${#numbers.formatInteger(producto.key.precio * producto.value,3,'POINT')}"></td>
+			    </tr>
+			  </tbody>
+			</table>
+
+		  </div>
+		</div>
+	    
+    </div>
+    
+    
+    		<!-- Modal dia -->
+		<div class="modal fade" id="busquedaDia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Ventas por día</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form th:action="@{/informes/ventaPorDia}" method="get">
+		     	 <div class="modal-body">
+					  <div class="form-row align-items-end">	 
+					  	<div class="form-group col-md-4">
+					      <label for="dayDate">Fecha</label>
+					      <input type="date" class="form-control" id="dayDate" name="fecha">
+					    </div>
+					  
+					    <div class="form-group col-md-4">
+					      <label for="dayOrderBy">Ordenar por</label>
+					      <select id="dayOrderBy" class="form-control" name="orderBy">
+					        <option selected value="fecha">Fecha</option>
+					        <option value="monto">Monto</option>
+					      </select>
+					    </div>	
+					    
+						<div class="form-group col-md-4">
+					      <label for="dayOrderMode">Modo</label>
+					      <select id="dayOrderMode" class="form-control" name="orderMode">
+					        <option selected value="ascendente">Ascendente</option>
+					        <option value="descendente">Descendente</option>
+					      </select>
+					    </div>	
+					    		    	    
+					  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-primary">Buscar</button>
+			      </div>
+		       </form>
+		    </div>
+		  </div>
+		</div>
+		
+		
+		    		<!-- Modal mes -->
+		<div class="modal fade" id="busquedaMes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Ventas por Mes</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form th:action="@{/informes/ventaPorMes}" method="get">
+		     	 <div class="modal-body">
+					  <div class="form-row align-items-end">	 
+					    <div class="form-group col-md-3">
+					      <label for="busquedaMesAno">Año</label>
+					      <select id="busquedaMesAno" class="form-control" name="ano">
+					        <option selected value="2020">2020</option>
+					        <option value="2019">2019</option>
+					      </select>
+					    </div>	
+					    
+					    <div class="form-group col-md-3">
+					      <label for="busquedaMesMes">Mes</label>
+					      <select id="busquedaMesMes" class="form-control" name="mes">
+					        <option selected value="1">Enero</option>
+					        <option value="2">Febrero</option>
+					        <option value="3">Marzo</option>
+					        <option value="4">Abril</option>
+					        <option value="5">Mayo</option>
+					        <option value="6">Junio</option>
+					        <option value="7">Julio</option>
+					        <option value="8">Agosto</option>
+					        <option value="9">Septiembre</option>
+					        <option value="10">Octubre</option>
+					        <option value="11">Noviembre</option>
+					        <option value="12">Diciembre</option>
+					      </select>
+					    </div>
+					  
+					    <div class="form-group col-md-3">
+					      <label for="mesOrderBy">Ordenar por</label>
+					      <select id="mesOrderBy" class="form-control" name="orderBy">
+					        <option selected value="fecha">Fecha</option>
+					        <option value="monto">Monto</option>
+					      </select>
+					    </div>		
+					    
+					    <div class="form-group col-md-3">
+					      <label for="mesOrderMode">Modo</label>
+					      <select id="mesOrderMode" class="form-control" name="orderMode">
+					        <option selected value="ascendente">Ascendente</option>
+					        <option value="descendente">Descendente</option>
+					      </select>
+					    </div>	
+					    	    	    
+					  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-primary">Buscar</button>
+			      </div>
+		       </form>
+		    </div>
+		  </div>
+		</div>
+    
+        		<!-- Modal periodo -->
+		<div class="modal fade" id="busquedaPeriodo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Ventas por Periodo</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form th:action="@{/informes/ventaPorPeriodo}" method="get">
+		     	 <div class="modal-body">
+					  <div class="form-row align-items-end">	 
+					  	<div class="form-group col-md-3">
+					      <label for="periodoDateStart">Fecha Inicio</label>
+					      <input type="date" class="form-control" id="periodoDateStart" name="periodoDateStart">
+					    </div>
+					    
+					   	<div class="form-group col-md-3">
+					      <label for="periodoDateEnd">Fecha Fin</label>
+					      <input type="date" class="form-control" id="periodoDateEnd" name="periodoDateEnd">
+					    </div>
+					  
+					    <div class="form-group col-md-3">
+					      <label for="periodoOrderBy">Ordenar por</label>
+					      <select id="periodoOrderBy" class="form-control" name="orderBy">
+					        <option selected value="fecha">Fecha</option>
+					        <option value="monto">Monto</option>
+					      </select>
+					    </div>
+					    
+					    <div class="form-group col-md-3">
+					      <label for="periodoOrderMode">Modo</label>
+					      <select id="periodoOrderMode" class="form-control" name="orderMode">
+					        <option selected value="ascendente">Ascendente</option>
+					        <option value="descendente">Descendente</option>
+					      </select>
+					    </div>	
+					    			    	    
+					  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="submit" class="btn btn-primary">Buscar</button>
+			      </div>
+		       </form>
+		    </div>
+		  </div>
+		</div>
+    
+
+</body>
+</html>

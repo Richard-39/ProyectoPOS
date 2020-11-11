@@ -4,10 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @Entity
+@AllArgsConstructor
 @Table(name = "item_boleta")
 public class ItemBoleta implements Serializable {
 

@@ -1,6 +1,8 @@
 package com.web.servicio;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
@@ -37,8 +39,15 @@ public class BoletaServicioImp implements IBoleta{
 
 	@Override
 	public BoletaVO findById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		BoletaVO boletaVo = new BoletaVO("Ha ocurrido un error", "102", new ArrayList<Boleta>());
+		try {
+			boletaVo.getBoletas().add(boletaDao.findById(id).get());
+			boletaVo.setMensaje(String.format("Se han encontrado %d registros.", boletaVo.getBoletas().size()));
+			boletaVo.setCodigo("0");
+		} catch (Exception e) {
+			log.info("Se ha encontrado un error en BoletaServicioImp : findById " + e);
+			}
+		return boletaVo;
 	}
 
 	@Override
@@ -65,6 +74,32 @@ public class BoletaServicioImp implements IBoleta{
 	public BoletaVO delete(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public BoletaVO findAllByFecha(Date fecha) {
+		BoletaVO boletaVo = new BoletaVO("Ha ocurrido un error", "106", new ArrayList<Boleta>());
+		try {
+			boletaVo.setBoletas(boletaDao.findAllByFecha(fecha));
+			boletaVo.setMensaje(String.format("Se han encontrado %d registros", boletaVo.getBoletas().size()));
+			boletaVo.setCodigo("0");
+		} catch (Exception e) {
+			log.info("Se ha encontrado un error en BoletaServicioImp : findAllByFecha " + e);
+			}
+		return boletaVo;
+	}
+
+	@Override
+	public BoletaVO findAllByFechaTimeBetween(Date fechaInicial, Date fechaFinal) {
+		BoletaVO boletaVo = new BoletaVO("Ha ocurrido un error", "107", new ArrayList<Boleta>());
+		try {
+			boletaVo.setBoletas(boletaDao.findAllByFechaBetween(fechaInicial, fechaFinal));
+			boletaVo.setMensaje(String.format("Se han encontrado %d registros", boletaVo.getBoletas().size()));
+			boletaVo.setCodigo("0");
+		} catch (Exception e) {
+			log.info("Se ha encontrado un error en BoletaServicioImp : findAllByFecha " + e);
+			}
+		return boletaVo;
 	}
 
 
