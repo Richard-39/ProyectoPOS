@@ -6,6 +6,8 @@ create table boleta(
 	id_boleta int auto_increment,
     fecha date not null,
     monto int not null,
+    estado varchar(10),
+    forma_pago varchar(10),
     constraint pk_boleta primary key (id_boleta)
 );
 
@@ -34,10 +36,10 @@ INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES
 INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Pan ideal 20 un.', '2390', 'Bolsa de pan de molde');
 
 -- boletas
-INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-19', '1990');
-INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-18', '1980');
-INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-17', '7170');
-INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-16', '5960');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`, `estado`, `forma_pago`) VALUES ('2020-10-16', '1990', 'emitida', 'efectivo');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`, `estado`, `forma_pago`) VALUES ('2020-10-17', '1980', 'emitida', 'efectivo');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`, `estado`, `forma_pago`) VALUES ('2020-10-18', '7170', 'emitida', 'debito');
+INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`, `estado`, `forma_pago`) VALUES ('2020-10-19', '5960', 'emitida', 'credito');
 
 -- item boleta
 INSERT INTO `proyecto_pos`.`item_boleta` (`id_boleta`, `id_producto`, `cantidad`) VALUES ('1', '1', '1');

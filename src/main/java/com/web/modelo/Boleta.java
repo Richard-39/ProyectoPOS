@@ -33,6 +33,9 @@ public class Boleta {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name="id_boleta")
     List<ItemBoleta> itemBoleta = new ArrayList<ItemBoleta>();
+    
+    @Column(name="estado")
+    private String estado;
 	   
     public static Integer calcularMonto(List<ItemBoleta> listaItemBoleta) {
     	Integer monto = 0;

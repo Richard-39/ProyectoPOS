@@ -30,26 +30,47 @@
     
 		<div class="container border border-secondary">
 		
-			<table class="table">
-			  <tbody>
-			    <tr>
-			      <td th:text="'N° Documento'"></td>
-			      <td th:text="${boleta.idBoleta}"></td>
-			    </tr>
-			    <tr>
-			      <td th:text="'Fecha'"></td>
-			      <td th:text="${#dates.format(boleta.fecha, 'dd/MM/yyyy')}"></td>
-			    </tr>
-			    <tr>
-			      <td th:text="'Forma de Pago'"></td>
-			      <td th:text="${#strings.capitalize(boleta.formaPago)}"></td>
-			    </tr>
-			    <tr>
-			      <td th:text="'Total'"></td>
-			      <td th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></td>
-			    </tr>
-			  </tbody>
-			</table>
+		<div class="row">
+			<div class="col-10">
+			
+				<table class="table">
+				  <tbody>
+				    <tr>
+				      <td th:text="'N° Documento'"></td>
+				      <td th:text="${boleta.idBoleta}"></td>
+				    </tr>
+				    <tr>
+				      <td th:text="'Fecha'"></td>
+				      <td th:text="${#dates.format(boleta.fecha, 'dd/MM/yyyy')}"></td>
+				    </tr>
+				    <tr>
+				      <td th:text="'Forma de Pago'"></td>
+				      <td th:text="${#strings.capitalize(boleta.formaPago)}"></td>
+				    </tr>
+				    <tr>
+				      <td th:text="'Estado'"></td>
+				      <td th:text="${#strings.capitalize(boleta.estado)}"></td>
+				    </tr>
+				    <tr>
+				      <td th:text="'Total'"></td>
+				      <td th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></td>
+				    </tr>
+				  </tbody>
+				</table>
+			
+			</div>
+			<div class="col-2">
+			
+				<div class="card my-3">
+				  <div class="card-body text-center">
+				  	<a type="button" class="btn btn-danger my-2" th:if="${boleta.estado!='anulada'}" th:href="@{/informes/anular?idBoleta=} + ${boleta.idBoleta}">Anular</a>
+				  	<a type="button" class="btn btn-secondary my-2 disabled" th:if="${boleta.estado=='anulada'}">Anular</a>
+				  </div>
+				</div>
+			
+			</div>
+		</div>
+			
 		
 		
 			<table class="table">
@@ -72,7 +93,10 @@
 		       </table>
 		       
 		       
+		       <a type="button" class="btn btn-primary my-2" th:href="@{/informes/verInforme}">Volver</a>
 		</div>
+		
+		
 
 
 </body>
