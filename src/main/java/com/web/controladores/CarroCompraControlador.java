@@ -57,7 +57,7 @@ public class CarroCompraControlador {
 		carroCompraServicio.agregarItem(itemBoleta);
 		System.out.println(carroCompraServicio.obtenerItems());
 	
-	return "forward:/listarProductos";
+	return "forward:/productos/listar";
 	}
 	
 	@GetMapping({"/", ""})

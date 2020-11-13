@@ -38,7 +38,7 @@
 			<!-- 			<span style="color: #17A2B8;">  -->
 			<!-- 				<i class="fas fa-shopping-cart fa-2x"></i> -->
 			<!-- 			</span>   -->
-			<a class="btn btn-info mx-3" href="/carroCompra/">Pagar</a>
+			<a class="btn btn-info mx-3 " href="/carroCompra/"><i class="fas fa-shopping-cart fa-1x"></i>Pagar</a>
 		</div>
 	</nav>
 	<div class="container mt-4">
@@ -48,46 +48,50 @@
 			<!-- 	<form th:action="@{}" method="get"> -->
 			<div class="search-container mb-3">
 				<form action="/action_page.php">
-					<input class="col-sm-8" type="text" placeholder="Buscar por nombre o ID" name="buscar">
+					<input class="col-sm-8" type="text"
+						placeholder="Buscar por nombre o ID" name="buscar">
 					<button type="submit" class="btn btn-primary">Buscar</button>
 				</form>
 			</div>
 			<!-- 	</form> -->
+			
 			<div class="row">
+			
+				<div th:each="producto:${productos}" class="card-deck col-3">
+					<div class="card border-primary text-center my-1">
 
-				<div th:each="producto:${productos}"
-					class="card border-primary text-center col-3 m-1">
+						<div class="card-header text-secondary">
+							<h5 th:text="${producto.nombre}"></h5>
+						</div>
+						<div class="card-body text-secondary">
+							<h5 th:text=" '$'+${producto.precio}"></h5>
+							<img src="..." class="card-img-top" alt="...">
+						</div>
 
-					<div class="card-header text-secondary">
-						<h5 th:text="${producto.nombre}"></h5>
-					</div>
-					<div class="card-body text-secondary">
-						<h5 th:text=" '$'+${producto.precio}"></h5>
-						<img src="..." class="card-img-top" alt="...">
-					</div>
+						<div class="card-footer text-secondary">
 
-					<div class="card-footer text-secondary">
+							<form th:action="@{/carroCompra/agregarCarro}" method="get">
+								<div class="container">
+									<div class="row">
+										<div class="col-sm-6">
+											<input class="form-control " type="text" name="cantidad">
+										</div>
 
-						<form th:action="@{/carroCompra/agregarCarro}" method="get">
-							<div class="container">
-								<div class="row">
-									<div class="col-sm-6">
-										<input class="form-control " type="text" name="cantidad">
-									</div>
-
-									<input th:value="${producto.idProducto}" type="hidden"
-										name="idProducto" readonly>
-									<div class="col-sm-3">
-										<button type="submit" class="btn btn-primary ">Agregar</button>
+										<input th:value="${producto.idProducto}" type="hidden"
+											name="idProducto" readonly>
+										<div class="col-sm-3">
+											<button type="submit" class="btn btn-primary ">Agregar</button>
+										</div>
 									</div>
 								</div>
-							</div>
-						</form>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
 		crossorigin="anonymous"></script>
