@@ -66,14 +66,29 @@ public class BoletaServicioImp implements IBoleta{
 
 	@Override
 	public BoletaVO update(Boleta boleta) {
-		// TODO Auto-generated method stub
-		return null;
+		BoletaVO boletaVo = new BoletaVO("Ha ocurrido un error", "104", new ArrayList<Boleta>());
+		try {
+			boletaVo.getBoletas().add(boletaDao.save(boleta));
+			boletaVo.setMensaje("Se ha actualizado la Boleta correctamente.");
+			boletaVo.setCodigo("0");
+		} catch (Exception e) {
+			log.info("Se ha encontrado un error en BoletaServicioImp : update " + e);
+			}
+		return boletaVo;
 	}
 
 	@Override
 	public BoletaVO delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		BoletaVO boletaVo = new BoletaVO("Ha ocurrido un error", "105", new ArrayList<Boleta>());
+		try {
+			boletaVo.getBoletas().add(boletaDao.findById(id).get());
+			boletaDao.delete(boletaDao.findById(id).get());
+			boletaVo.setMensaje("Se ha Eliminado la Boleta correctamente.");
+			boletaVo.setCodigo("0");
+		} catch (Exception e) {
+			log.info("Se ha encontrado un error en BoletaServicioImp : delete " + e);
+			}
+		return boletaVo;
 	}
 
 	@Override

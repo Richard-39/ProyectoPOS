@@ -14,19 +14,8 @@
 	<title>Informes</title>
 	
 	<script type="text/javascript">
-		
-	function dia() {
-		document.getElementById("dropdownMenuButton").innerHTML = "Día";
-		$('#busquedaDia').modal();
-	}
-	
-	function mes() {
-		document.getElementById("dropdownMenuButton").innerHTML = "Mes";
-		$('#busquedaMes').modal();
-	}
-	
+			
 	function periodo() {
-		document.getElementById("dropdownMenuButton").innerHTML = "Periodo";
 		$('#busquedaPeriodo').modal();
 	}
 		
@@ -55,18 +44,19 @@
     
     <div class="container mt-4">
     
-    <div class="row my-5">
+    <div class="row my-3">
     	 <div class="col-6">
     	 	<h3>Informe de Ventas</h3>
     	</div>
     	<div class="col-2">
     	 <div class="form-group col-md-3">
 		    <div class="dropdown">
-			  <button th:text="${tipoBusqueda}" class="btn btn-secondary dropdown-toggle btn-lg" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="dia">
+			  <button class="btn btn-secondary dropdown-toggle btn-lg" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="dia">
+			  Buscar
 			  </button>
 			  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			    <a class="dropdown-item" onclick="dia()">Dia</a>
-			    <a class="dropdown-item" onclick="mes()">Mes</a>
+			    <a class="dropdown-item" th:href="@{/informes/busqueda?tiempo=diaActual}">Dia actual</a>
+			    <a class="dropdown-item" th:href="@{/informes/busqueda?tiempo=mesActual}">Mes actual</a>
 			    <a class="dropdown-item" onclick="periodo()">Periodo</a>
 			  </div>
 			</div>
@@ -81,6 +71,25 @@
 			</div>
     	</div>
     	
+    </div>
+    
+    <div class="row my-3 text-center">
+    	 <div class="col-3">
+			<span class="font-weight-bold">Desde: </span>
+			<span th:text="${#dates.format(busqueda.getFechaInicio(), 'dd/MM/yyyy')}"></span>
+    	</div>
+    	<div class="col-3">
+			<span class="font-weight-bold">Hasta: </span>
+			<span th:text="${#dates.format(busqueda.getFechaTermino(), 'dd/MM/yyyy')}"></span>
+    	</div>
+    	<div class="col-3">
+			<span class="font-weight-bold">Ordenado por:  </span>
+			<span th:text="${#strings.capitalize(busqueda.getOrderBy())}"></span>
+    	</div>
+    	<div class="col-3">
+			<span class="font-weight-bold">Modo :  </span>
+			<span th:text="${#strings.capitalize(busqueda.getOrderMode())}"></span>
+    	</div>	
     </div>
     
     <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -99,9 +108,10 @@
 			  <thead class="thead-dark">
 			    <tr>
 			      <th class="text-center" scope="col">Id</th>
-			      <th class="text-center" scope="col">Fecha</th>
-			      <th class="text-center" scope="col">Forma Pago</th>
-			      <th class="text-center" scope="col">Monto</th>
+			      <th class="text-center" scope="col">Fecha <a th:href="@{/informes/busqueda?orderBy=fecha&orderMode=descendente}">&#x25BC;</a> / <a th:href="@{/informes/busqueda?orderBy=fecha&orderMode=ascendente}">&#x25B2;</a></th>
+			      <th class="text-center" scope="col">Forma Pago <a th:href="@{/informes/busqueda?orderBy=formaPago&orderMode=descendente}">&#x25BC;</a> / <a th:href="@{/informes/busqueda?orderBy=formaPago&orderMode=ascendente}">&#x25B2;</a></th>
+			      <th class="text-center" scope="col">Estado <a th:href="@{/informes/busqueda?orderBy=estado&orderMode=descendente}">&#x25BC;</a> / <a th:href="@{/informes/busqueda?orderBy=estado&orderMode=ascendente}">&#x25B2;</a></th>
+			      <th class="text-center" scope="col">Monto <a th:href="@{/informes/busqueda?orderBy=monto&orderMode=descendente}">&#x25BC;</a> / <a th:href="@{/informes/busqueda?orderBy=monto&orderMode=ascendente}">&#x25B2;</a></th>
 			      <th></th>
 			    </tr>
 			  </thead>
@@ -110,8 +120,9 @@
 			      <th class="text-center" scope="row" th:text="${boleta.idBoleta}"></th>
 			      <td class="text-center" th:text="${boleta.fecha}"></td>
 			      <td class="text-center" th:text="${#strings.capitalize(boleta.formaPago)}"></td>
+			      <td class="text-center" th:text="${#strings.capitalize(boleta.estado)}"></td>
 			      <td class="text-center" th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></td>
-			      <td class="text-center"> <a th:href="@{/informes/boleta?idBoleta=} + ${boleta.idBoleta}" th:text="'Ver Boleta'" target="_blank"></a></td>
+			      <td class="text-center"> <a th:href="@{/informes/boleta?idBoleta=} + ${boleta.idBoleta}" th:text="'Ver Boleta'"></a></td>
 			    </tr>
 			  </tbody>
 			</table>
@@ -147,117 +158,7 @@
     </div>
     
     
-    		<!-- Modal dia -->
-		<div class="modal fade" id="busquedaDia" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Ventas por día</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <form th:action="@{/informes/ventaPorDia}" method="get">
-		     	 <div class="modal-body">
-					  <div class="form-row align-items-end">	 
-					  	<div class="form-group col-md-4">
-					      <label for="dayDate">Fecha</label>
-					      <input type="date" class="form-control" id="dayDate" name="fecha">
-					    </div>
-					  
-					    <div class="form-group col-md-4">
-					      <label for="dayOrderBy">Ordenar por</label>
-					      <select id="dayOrderBy" class="form-control" name="orderBy">
-					        <option selected value="fecha">Fecha</option>
-					        <option value="monto">Monto</option>
-					      </select>
-					    </div>	
-					    
-						<div class="form-group col-md-4">
-					      <label for="dayOrderMode">Modo</label>
-					      <select id="dayOrderMode" class="form-control" name="orderMode">
-					        <option selected value="ascendente">Ascendente</option>
-					        <option value="descendente">Descendente</option>
-					      </select>
-					    </div>	
-					    		    	    
-					  </div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-primary">Buscar</button>
-			      </div>
-		       </form>
-		    </div>
-		  </div>
-		</div>
-		
-		
-		    		<!-- Modal mes -->
-		<div class="modal fade" id="busquedaMes" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">Ventas por Mes</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <form th:action="@{/informes/ventaPorMes}" method="get">
-		     	 <div class="modal-body">
-					  <div class="form-row align-items-end">	 
-					    <div class="form-group col-md-3">
-					      <label for="busquedaMesAno">Año</label>
-					      <select id="busquedaMesAno" class="form-control" name="ano">
-					        <option selected value="2020">2020</option>
-					        <option value="2019">2019</option>
-					      </select>
-					    </div>	
-					    
-					    <div class="form-group col-md-3">
-					      <label for="busquedaMesMes">Mes</label>
-					      <select id="busquedaMesMes" class="form-control" name="mes">
-					        <option selected value="1">Enero</option>
-					        <option value="2">Febrero</option>
-					        <option value="3">Marzo</option>
-					        <option value="4">Abril</option>
-					        <option value="5">Mayo</option>
-					        <option value="6">Junio</option>
-					        <option value="7">Julio</option>
-					        <option value="8">Agosto</option>
-					        <option value="9">Septiembre</option>
-					        <option value="10">Octubre</option>
-					        <option value="11">Noviembre</option>
-					        <option value="12">Diciembre</option>
-					      </select>
-					    </div>
-					  
-					    <div class="form-group col-md-3">
-					      <label for="mesOrderBy">Ordenar por</label>
-					      <select id="mesOrderBy" class="form-control" name="orderBy">
-					        <option selected value="fecha">Fecha</option>
-					        <option value="monto">Monto</option>
-					      </select>
-					    </div>		
-					    
-					    <div class="form-group col-md-3">
-					      <label for="mesOrderMode">Modo</label>
-					      <select id="mesOrderMode" class="form-control" name="orderMode">
-					        <option selected value="ascendente">Ascendente</option>
-					        <option value="descendente">Descendente</option>
-					      </select>
-					    </div>	
-					    	    	    
-					  </div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="submit" class="btn btn-primary">Buscar</button>
-			      </div>
-		       </form>
-		    </div>
-		  </div>
-		</div>
-    
-        		<!-- Modal periodo -->
+   		<!-- Modal periodo -->
 		<div class="modal fade" id="busquedaPeriodo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -267,35 +168,18 @@
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
-		      <form th:action="@{/informes/ventaPorPeriodo}" method="get">
+		      <form th:action="@{/informes/busqueda}" method="get" modelAttribute="busqueda">
 		     	 <div class="modal-body">
 					  <div class="form-row align-items-end">	 
-					  	<div class="form-group col-md-3">
+					  	<div class="form-group col-md-6">
 					      <label for="periodoDateStart">Fecha Inicio</label>
-					      <input type="date" class="form-control" id="periodoDateStart" name="periodoDateStart">
+					      <input type="date" class="form-control" id="fechaInicio" name="fechaInicio">
 					    </div>
 					    
-					   	<div class="form-group col-md-3">
+					   	<div class="form-group col-md-6">
 					      <label for="periodoDateEnd">Fecha Fin</label>
-					      <input type="date" class="form-control" id="periodoDateEnd" name="periodoDateEnd">
-					    </div>
-					  
-					    <div class="form-group col-md-3">
-					      <label for="periodoOrderBy">Ordenar por</label>
-					      <select id="periodoOrderBy" class="form-control" name="orderBy">
-					        <option selected value="fecha">Fecha</option>
-					        <option value="monto">Monto</option>
-					      </select>
-					    </div>
-					    
-					    <div class="form-group col-md-3">
-					      <label for="periodoOrderMode">Modo</label>
-					      <select id="periodoOrderMode" class="form-control" name="orderMode">
-					        <option selected value="ascendente">Ascendente</option>
-					        <option value="descendente">Descendente</option>
-					      </select>
-					    </div>	
-					    			    	    
+					      <input type="date" class="form-control" id="fechaTermino" name="fechaTermino">
+					    </div>				    			    	    
 					  </div>
 			      </div>
 			      <div class="modal-footer">
