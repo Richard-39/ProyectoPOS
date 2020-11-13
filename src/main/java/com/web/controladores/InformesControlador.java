@@ -102,6 +102,8 @@ public class InformesControlador {
 			
 			LocalDate start = month.atDay(1);
 			LocalDate stop = start.plusMonths(1);
+			System.out.println("hola");
+			System.out.println("hola");
 			
 			ZoneId defaultZoneId = ZoneId.systemDefault();
 			
