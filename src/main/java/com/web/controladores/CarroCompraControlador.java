@@ -57,7 +57,7 @@ public class CarroCompraControlador {
 		carroCompraServicio.agregarItem(itemBoleta);
 		System.out.println(carroCompraServicio.obtenerItems());
 	
-	return "forward:/productos/listar";
+	return "redirect:/productos/listar";
 	}
 	
 	@GetMapping({"/", ""})
@@ -68,7 +68,7 @@ public class CarroCompraControlador {
 		
 		if (boleta.getItemBoleta().size() <= 0) {
 			model.addAttribute("mensaje", "El carro de compra está vacio.");
-			return "forward:/productos/listar";
+			return "redirect:/productos/listar";
 		}
 		
 		model.addAttribute("boleta", boleta);
@@ -80,7 +80,7 @@ public class CarroCompraControlador {
 	@GetMapping("/eliminarProducto")
 	public String eliminarProducto(@RequestParam Integer idProducto) {
 		carroCompraServicio.eliminarProducto(idProducto);
-		return "forward:/carroCompra/";
+		return "redirect:/carroCompra/";
 	}
 	
 	@PostMapping("/resumenPago")
