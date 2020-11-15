@@ -66,7 +66,7 @@
     	<div class="col-4">
 			<div class="card mx-auto text-center" style="width: 17rem;">
 			  <ul class="list-group list-group-flush">
-			    <li class="list-group-item"><span class="font-weight-bold h4" th:text="'Total:  '"></span><span class="h3" th:text="${#numbers.formatInteger(total,3,'POINT')}"></span></li>
+			    <li class="list-group-item"><span class="font-weight-bold h4" th:text="'Total:  '"></span><span class="h3" th:text="${total > 999} ? ${#numbers.formatInteger(total,3,'POINT')} : ${total}"></span></li>
 			  </ul>
 			</div>
     	</div>
@@ -121,7 +121,7 @@
 			      <td class="text-center" th:text="${boleta.fecha}"></td>
 			      <td class="text-center" th:text="${#strings.capitalize(boleta.formaPago)}"></td>
 			      <td class="text-center" th:text="${#strings.capitalize(boleta.estado)}"></td>
-			      <td class="text-center" th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></td>
+			      <td class="text-center" th:text="${boleta.monto > 999} ? ${#numbers.formatInteger(boleta.monto,3,'POINT')} : ${boleta.monto}"></td>
 			      <td class="text-center"> <a th:href="@{/informes/boleta?idBoleta=} + ${boleta.idBoleta}" th:text="'Ver Boleta'"></a></td>
 			    </tr>
 			  </tbody>
@@ -145,9 +145,9 @@
 			    <tr th:each="producto : ${productos}">
 			      <th scope="row" th:text="${producto.key.nombre}"></th>
 			      <td th:text="${producto.key.descripcion}"></td>
-			      <td class="text-center" th:text="${#numbers.formatInteger(producto.key.precio,3,'POINT')}"></td>
-			      <td class="text-center" th:text="${#numbers.formatInteger(producto.value,3,'POINT')}"></td>
-			      <td class="text-right" th:text="${#numbers.formatInteger(producto.key.precio * producto.value,3,'POINT')}"></td>
+			      <td class="text-center" th:text="${producto.key.precio > 999} ? ${#numbers.formatInteger(producto.key.precio,3,'POINT')} : ${producto.key.precio}"></td>
+			      <td class="text-center" th:text="${producto.value > 999} ? ${#numbers.formatInteger(producto.value,3,'POINT')} : ${producto.value}"></td>
+			      <td class="text-right" th:text="${producto.key.precio * producto.value > 999} ? ${#numbers.formatInteger(producto.key.precio * producto.value,3,'POINT')} : ${producto.key.precio * producto.value}"></td>
 			    </tr>
 			  </tbody>
 			</table>

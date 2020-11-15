@@ -22,7 +22,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item"><a class="nav-link" href="/inicio">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/listarProductos">Productos</a>
+                <li class="nav-item"><a class="nav-link" href="/productos/listar">Productos</a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="/carroCompra">Carro de Compra</a></li>
                 <li class="nav-item"><a class="nav-link" href="/informes">Informes</a></li>
@@ -41,7 +41,7 @@
   				  <div class="card border-primary mb-3 mx-auto" style="max-width: 14rem;">
 					  <div class="card-header text-center h4">Total</div>
 					  <div class="card-body text-dark">
-					    <h5 class="card-title text-center h2" th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></h5>
+					    <h5 class="card-title text-center h2" th:text="${boleta.monto > 999} ? ${#numbers.formatInteger(boleta.monto,3,'POINT')} : ${boleta.monto}"></h5>
 					  </div>
 				  </div>
   				</div>
@@ -50,7 +50,7 @@
   				  <div class="card border-warning mb-3 mx-auto" style="max-width: 14rem;">
 					  <div class="card-header text-center h4">Monto Recibido</div>
 					  <div class="card-body text-dark">
-					    <h5 class="card-title text-center h2" th:text="${#numbers.formatInteger(montoPago,3,'POINT')}"></h5>
+					    <h5 class="card-title text-center h2" th:text="${montoPago > 999} ? ${#numbers.formatInteger(montoPago,3,'POINT')} : ${montoPago}"></h5>
 					  </div>
 				  </div>
   				</div>
@@ -59,7 +59,7 @@
   				  <div class="card border-success mb-3 mx-auto" style="max-width: 14rem;">
 				  <div class="card-header text-center h4">Vuelto</div>
 				  <div class="card-body text-dark">
-				    <h5 class="card-title text-center h2" th:text="${#numbers.formatInteger(vuelto,3,'POINT')}"></h5>
+				    <h5 class="card-title text-center h2" th:text="${vuelto > 999} ? ${#numbers.formatInteger(vuelto,3,'POINT')} : ${vuelto}"></h5>
 				  </div>
 				  </div>
   				</div>
@@ -89,15 +89,15 @@
 		            <tbody>
 						<tr th:each="item, itemStat : ${boleta.itemBoleta}">
 						    <td class="w-50" th:text="${item.producto.nombre}"/>
-						    <td class="text-center" th:text="${#numbers.formatInteger(item.producto.precio,3,'POINT')}"/>
+						    <td class="text-center" th:text="${item.producto.precio > 999} ? ${#numbers.formatInteger(item.producto.precio,3,'POINT')} : ${item.producto.precio}"/>
 						    <td class="text-center" th:text="${item.cantidad}"/>
-						    <td class="text-right" th:text="${#numbers.formatInteger(item.carcularSubTotal(),3,'POINT')}"/>
+						    <td class="text-right" th:text="${item.carcularSubTotal() > 999} ? ${#numbers.formatInteger(item.carcularSubTotal(),3,'POINT')} : ${item.carcularSubTotal()}"/>
 						</tr>
 		            </tbody>
 		        </table>
 		        
 				<div class="text-right">
-					<a href="/listarProductos" class="btn btn-primary">Volver</a>
+					<a href="/productos/listar" class="btn btn-primary">Volver</a>
 				</div>
 				
 			</div>

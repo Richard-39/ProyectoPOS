@@ -68,7 +68,7 @@ public class CarroCompraControlador {
 		
 		if (boleta.getItemBoleta().size() <= 0) {
 			model.addAttribute("mensaje", "El carro de compra está vacio.");
-			return "forward:/listarProductos";
+			return "forward:/productos/listar";
 		}
 		
 		model.addAttribute("boleta", boleta);
@@ -98,7 +98,7 @@ public class CarroCompraControlador {
 		
 		if(boleta.getItemBoleta().size() <= 0 || carroCompraServicio.obtenerItems().size() <=0) {
 			model.addAttribute("mensaje", "El carro de compra está vacio.");
-			return new ModelAndView ("redirect:/listarProductos");
+			return new ModelAndView ("redirect:/productos/listar");
 		}
 		
 		for (ItemBoleta item : boleta.getItemBoleta()) {
@@ -138,7 +138,7 @@ public class CarroCompraControlador {
 	public ModelAndView resumenPagoView(@ModelAttribute("boleta") Boleta boleta, ModelMap model ) {
 		
 		if(boleta.getItemBoleta().size() <= 0) {
-			return new ModelAndView ("redirect:/listarProductos");
+			return new ModelAndView ("redirect:/productos/listar");
 		}
 		
 		model.addAttribute("boleta", boleta);
