@@ -1,8 +1,6 @@
 package com.web.controladores;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.ZoneId;
@@ -98,12 +96,13 @@ public class InformesControlador {
 			nuevaBusqueda.setFechaTermino(new Date());
 		} else if (tiempo != null && tiempo.equals("mesActual")) {
 			Calendar fecha = Calendar.getInstance();
-			YearMonth month = YearMonth.of(2020, fecha.get(Calendar.MONTH) + 1);
-			
+			YearMonth month = YearMonth.of(fecha.get(Calendar.YEAR), fecha.get(Calendar.MONTH) + 1);
+
 			LocalDate start = month.atDay(1);
-			LocalDate stop = start.plusMonths(1);
-			System.out.println("hola");
-			System.out.println("hola");
+			// obtiene la fecha del ultimo dia del mes
+			LocalDate stop = month.atDay(Calendar.getInstance().getActualMaximum(Calendar.DAY_OF_MONTH));
+			// suma 1 mes, pero no sirve para obtener el ultimo dia del mes, se pasa en 1 dia
+//			LocalDate stop = start.plusMonths(1);
 			
 			ZoneId defaultZoneId = ZoneId.systemDefault();
 			
