@@ -35,10 +35,8 @@
 			</ul>
 		</div>
 		<div class="navbar-nav ">
-			<!-- 			<span style="color: #17A2B8;">  -->
-			<!-- 				<i class="fas fa-shopping-cart fa-2x"></i> -->
-			<!-- 			</span>   -->
-			<a class="btn btn-info mx-3 " href="/carroCompra/"><i class="fas fa-shopping-cart fa-1x"></i>Pagar</a>
+			<a class="btn btn-info mx-3 " href="/carroCompra/"><i
+				class="fas fa-shopping-cart fa-1x"></i> Pagar</a>
 		</div>
 	</nav>
 	<div class="container mt-4">
@@ -46,51 +44,64 @@
 		<div class="my-5">
 			<h3 class="mb-3">Listado de Productos</h3>
 			<!-- 	<form th:action="@{}" method="get"> -->
-			<div class="search-container mb-3">
-				<form action="/action_page.php">
-					<input class="col-sm-8" type="text"
-						placeholder="Buscar por nombre o ID" name="buscar">
-					<button type="submit" class="btn btn-primary">Buscar</button>
-				</form>
-			</div>
-			<!-- 	</form> -->
-			
-			<div class="row">
-			
-				<div th:each="producto:${productos}" class="card-deck col-3">
-					<div class="card border-primary text-center my-1">
 
-						<div class="card-header text-secondary">
-							<h5 th:text="${producto.nombre}"></h5>
-						</div>
-						<div class="card-body text-secondary">
-							<h5 th:text=" '$'+${producto.precio}"></h5>
-							<img src="..." class="card-img-top" alt="...">
-						</div>
+			<form>
+				<div class="row">
+					<div class="col-11 pr-0">
+						<input class="form-control" type="text"
+							placeholder="Buscar por nombre o ID" name="buscar">
+					</div>
+					<div class="col-1">
+						<button type="submit" class="btn btn-primary float-right">
+							<i class="fas fa-search"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
 
-						<div class="card-footer text-secondary">
+		<!-- 	</form> -->
 
-							<form th:action="@{/carroCompra/agregarCarro}" method="get">
-								<div class="container">
-									<div class="row">
-										<div class="col-sm-6">
-											<input class="form-control " type="text" name="cantidad">
-										</div>
 
-										<input th:value="${producto.idProducto}" type="hidden"
-											name="idProducto" readonly>
-										<div class="col-sm-3">
-											<button type="submit" class="btn btn-primary ">Agregar</button>
-										</div>
+		<div class="row row-cols-1 row-cols-lg-4">
+
+			<div th:each="producto:${productos}" class="col mb-3">
+				<div class="card h-100 border-primary text-center">
+
+					<div class="card-header text-secondary">
+						<h5 th:text="${producto.nombre}"></h5>
+					</div>
+					<div class="card-body text-secondary">
+						<h5 th:text=" '$'+${producto.precio}"></h5>
+						<img src="..." class="card-img-top" alt="...">
+					</div>
+
+					<div class="card-footer text-secondary">
+
+						<form th:action="@{/carroCompra/agregarCarro}" method="get">
+							<div class="container">
+								<div class="row">
+									<div class="col-sm-8 p-0">
+										<input value="0" class="form-control text-center " type="text"
+											name="cantidad">
+									</div>
+
+									<input th:value="${producto.idProducto}" type="hidden"
+										name="idProducto" readonly>
+									<div class="col-sm-4 p-0">
+										<button type="submit" class="btn btn-primary ">
+											<i class="fas fa-cart-plus fa-1x"></i>
+										</button>
 									</div>
 								</div>
-							</form>
-						</div>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+
 
 	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
 		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
