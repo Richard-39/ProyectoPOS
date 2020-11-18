@@ -40,7 +40,7 @@ public class ProductoServicioImpl implements IProducto {
 	public ProductoVO findByNombre(String nombre) {
 		respuesta = new ProductoVO("Ha ocurrido un error", "102", new ArrayList<Producto>());
 		try {
-			List<Producto> productos = dao.findByNombreLike(nombre);
+			List<Producto> productos = dao.findByNombreContaining(nombre);
 			if (productos.size() > 0) {
 				respuesta.setProductos(productos);
 				respuesta.setMensaje("Producto encontrado correctamente.");

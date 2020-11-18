@@ -31,6 +31,24 @@
 	crossorigin="anonymous"></script>
 <script src="https://kit.fontawesome.com/50b91961d5.js"
 	crossorigin="anonymous"></script>
+<script type="text/javascript">
+	var idSelect=0;
+	var nombreSelect="";
+	var precioSelect="";
+	var descripcionSelect="";
+	function setInformation(idProducto, nombre, precio, descripcion){
+		idSelect = idProducto;
+		nombreSelect = nombre;
+		precioSelect = precio;
+		descripcionSlect = descripcion;
+	}
+	function deleteRow(){
+			if (confirm("Está seguro de elimnar este libro? :o")) {
+				window.location.href = "/deleteLibro?id=" +idSelect;
+			} 				
+		}
+	}
+</script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -69,11 +87,11 @@
 
 				</div>
 			</div>
-			<form>
+			<form th:action="@{/productos/buscar}" method="post">
 				<div class="row">
 					<div class="col-11 pr-0">
 						<input class="form-control" type="text"
-							placeholder="Buscar por nombre o ID" name="buscar">
+							placeholder="Buscar por nombre o ID" name="criterio">
 					</div>
 					<div class="col-1">
 						<button type="submit" class="btn btn-primary float-right">
@@ -89,8 +107,7 @@
 						<th scope="col">Nombre</th>
 						<th scope="col">Precio</th>
 						<th scope="col">Descripcion</th>
-						<th scope="col"></th>
-						<th scope="col"></th>
+						<th scope="col" class="text-center">Acción</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -101,18 +118,27 @@
 						<td th:text="${producto.precio}" />
 						<td th:text="${producto.descripcion}" />
 						<td>
-							<button type="button"
-								class="btn btn-secondary btn-rounded btn-sm m-0"
-								data-toggle="modal" data-target="#editarModal"
-								data-whatever="@mdo">Editar</button>
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-secondary btn-rounded btn-sm m-0"
+									data-toggle="modal" data-target="#editarModal"
+									onclick="setInformation(
+					  ${productoTemp.getIdProducto()}, 
+					  ${productoTemp.getNombre()},
+					  ${productoTemp.getPrecio()},
+					  ${productoTemp.getDescripcion()},
+					  );"><i class="fas fa-edit fa-1x"></i> Editar</button>
 
-						</td>
-						<td>
-							<button type="button"
-								class="btn btn-danger btn-rounded btn-sm m-0"
-								data-toggle="modal" data-target="#eliminarModal"
-								data-whatever="@fat">Eliminar</button>
-
+								<button type="button"
+									class="btn btn-danger btn-rounded btn-sm m-0"
+									data-toggle="modal" data-target="#eliminarModal"
+									onclick="setInformation(
+					  ${productoTemp.getIdProducto()}, 
+					  ${productoTemp.getNombre()},
+					  ${productoTemp.getPrecio()},
+					  ${productoTemp.getDescripcion()},
+					  	);"><i class="fas fa-trash-alt fa-1x"></i> Eliminar</button>
+							</div>
 						</td>
 					</tr>
 				</tbody>
@@ -129,11 +155,10 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
+
 						<form th:action="@{/productos/crear}" method="post"
 							th:object="${producto}">
 							<div class="modal-body">
-
-
 								<div class="form-group">
 									<label for="nombre-producto" class="col-form-label">Nombre:</label>
 									<textarea class="form-control" id="nombre" name="nombre"></textarea>
@@ -198,34 +223,35 @@
 					</div>
 				</div>
 			</div>
-			<div class="modal fade" id="eliminarModal" tabindex="-1"
-				aria-labelledby="exampleModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Eliminar
-								Producto</h5>
-							<button type="button" class="close" data-dismiss="modal"
-								aria-label="Close">
-								<span aria-hidden="true">&times;</span>
-							</button>
-						</div>
-						<div class="modal-body">
-							<form>
-								<div class="form-group">
-									<label for="id-producto" class="col-form-label">Está
-										seguro que desea eliminar el siguiente producto?</label>
-								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Cerrar</button>
-							<button type="button" class="btn btn-primary">Eliminar</button>
-						</div>
-					</div>
-				</div>
-			</div>
+<!-- 			<div class="modal fade" id="eliminarModal" tabindex="-1" -->
+<!-- 				aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
+<!-- 				<div class="modal-dialog"> -->
+<!-- 					<div class="modal-content"> -->
+<!-- 						<div class="modal-header"> -->
+<!-- 							<h5 class="modal-title" id="exampleModalLabel">Eliminar -->
+<!-- 								Producto</h5> -->
+<!-- 							<button type="button" class="close" data-dismiss="modal" -->
+<!-- 								aria-label="Close"> -->
+<!-- 								<span aria-hidden="true">&times;</span> -->
+<!-- 							</button> -->
+<!-- 						</div> -->
+<!-- 						<div class="modal-body"> -->
+<!-- 							<form> -->
+<!-- 								<div class="form-group"> -->
+<!-- 									<label for="id-producto" class="col-form-label">Está -->
+<!-- 										seguro que desea eliminar el siguiente producto?</label> <input -->
+<!-- 										th:text=${producto.nombre} readonly> -->
+<!-- 								</div> -->
+<!-- 							</form> -->
+<!-- 						</div> -->
+<!-- 						<div class="modal-footer"> -->
+<!-- 							<button type="button" class="btn btn-secondary" -->
+<!-- 								data-dismiss="modal">Cerrar</button> -->
+<!-- 							<button type="button" class="btn btn-primary" >Eliminar</button> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 		</div>
 	</div>
 
