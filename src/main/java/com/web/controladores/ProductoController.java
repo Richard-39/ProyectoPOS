@@ -59,31 +59,27 @@ public class ProductoController {
 
 	@PostMapping("/buscar")
 	public String buscarProducto(@RequestParam String criterio, Model model) {
-		ProductoVO productoVo = productoDao.findByNombre(criterio);
-		if (productoVo.getCodigo() == "0") {
-			model.addAttribute("productos", productoVo.getProductos());
-			model.addAttribute("mensaje", productoVo.getMensaje());
-			model.addAttribute("codigo", productoVo.getCodigo());
-		} else {
-			productoVo = productoDao.findById(Integer.parseInt(criterio));
-			if (productoVo.getCodigo() == "0") {
-				model.addAttribute("productos", productoVo.getProductos());
-				model.addAttribute("mensaje", productoVo.getMensaje());
-				model.addAttribute("codigo", productoVo.getCodigo());
-			}
-			model.addAttribute("productos", productoVo.getProductos());
-			model.addAttribute("mensaje", productoVo.getMensaje());
-			model.addAttribute("codigo", productoVo.getCodigo());
+		ProductoVO productoVo = null;
+		try {
+		productoVo = productoDao.findById(Integer.parseInt(criterio));
+			
+		} catch (Exception e) {
+			productoVo = productoDao.findByNombre(criterio);
 		}
-		return "administrarProductos";
+			model.addAttribute("productos", productoVo.getProductos());
+			model.addAttribute("mensaje", productoVo.getMensaje());
+			model.addAttribute("codigo", productoVo.getCodigo());
+		
+			return "administrarProductos";}
+	
+	@GetMapping("/eliminar")
+	public String eliminarProducto (@RequestParam Integer id) {
+		ProductoVO productoVo = productoDao.findById(id);
+		System.out.println(productoVo.getProductos().get(0));
+		productoDao.delete(productoVo.getProductos().get(0));
+		
+		return "redirect:/productos/administrar";
 	}
-//	@RequestMapping(value ="filtrarLibros" , method = RequestMethod.POST)
-//	public String filtrarLibros(@RequestParam String criterio, ModelMap modelo) {
-//		LibroVO libroVo = libroServicio.findByNombreyTitulo(criterio);
-//		modelo.addAttribute("listaLibros", libroVo.getLibros());
-//		modelo.addAttribute("mensaje", libroVo.getMensaje());
-//		modelo.addAttribute("codigo", libroVo.getCodigo());
-//		return "listarLibros";
+	
 
-//	}
 }

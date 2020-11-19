@@ -85,6 +85,7 @@ public class ProductoServicioImpl implements IProducto {
 		respuesta = new ProductoVO ("Ha ocurrido un error", "105", new ArrayList<Producto>());
 		try {
 			dao.delete(producto);
+			System.out.println("producto eliminado");
 			respuesta.setMensaje("El producto ha sido eliminado exitosamente");
 			respuesta.setCodigo("0");
 		}catch (Exception e){

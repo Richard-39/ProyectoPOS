@@ -32,22 +32,15 @@
 <script src="https://kit.fontawesome.com/50b91961d5.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript">
-	var idSelect=0;
-	var nombreSelect="";
-	var precioSelect="";
-	var descripcionSelect="";
 	function setInformation(idProducto, nombre, precio, descripcion){
-		idSelect = idProducto;
-		nombreSelect = nombre;
-		precioSelect = precio;
-		descripcionSlect = descripcion;
+		document.getElementById("id-producto").value = idProducto;
+		document.getElementById("nombre-producto").value = nombre;
+		document.getElementById("precio-producto").value = precio;
+		document.getElementById("descripcion-producto").value = descripcion;
+		$('#editarModal').modal();
 	}
-	function deleteRow(){
-			if (confirm("Está seguro de elimnar este libro? :o")) {
-				window.location.href = "/deleteLibro?id=" +idSelect;
-			} 				
-		}
-	}
+	
+	
 </script>
 </head>
 <body>
@@ -78,9 +71,9 @@
 
 		<div class="my-5">
 			<h3 class="mb-3">Administrar Productos</h3>
-			<div class="container row p-0">
-				<div class="col-12 p-0">
-					<button type="button" class="btn btn-success float-right mb-5"
+			<div class="row">
+				<div class="col-12">
+					<button type="button" class="btn btn-success float-right mb-3"
 						data-toggle="modal" data-target="#agregarModal">
 						<i class="fas fa-plus-circle fa-1x"></i> Nuevo Producto
 					</button>
@@ -100,7 +93,7 @@
 					</div>
 				</div>
 			</form>
-			<table class="table border border-dark my-2">
+			<table class="table border border-dark my-3">
 				<thead class="thead-dark">
 					<tr>
 						<th scope="col">Id</th>
@@ -121,23 +114,13 @@
 							<div class="btn-group">
 								<button type="button"
 									class="btn btn-secondary btn-rounded btn-sm m-0"
-									data-toggle="modal" data-target="#editarModal"
-									onclick="setInformation(
-					  ${productoTemp.getIdProducto()}, 
-					  ${productoTemp.getNombre()},
-					  ${productoTemp.getPrecio()},
-					  ${productoTemp.getDescripcion()},
-					  );"><i class="fas fa-edit fa-1x"></i> Editar</button>
+									
+									th:onclick="setInformation([[${producto.idProducto}]], [[${producto.nombre}]], [[${producto.precio}]], [[${producto.descripcion}]])"
+									><i class="fas fa-edit fa-1x"></i> Editar</button>
 
-								<button type="button"
+								<a th:href="@{/productos/eliminar?id=}+${producto.idProducto}" type="button"
 									class="btn btn-danger btn-rounded btn-sm m-0"
-									data-toggle="modal" data-target="#eliminarModal"
-									onclick="setInformation(
-					  ${productoTemp.getIdProducto()}, 
-					  ${productoTemp.getNombre()},
-					  ${productoTemp.getPrecio()},
-					  ${productoTemp.getDescripcion()},
-					  	);"><i class="fas fa-trash-alt fa-1x"></i> Eliminar</button>
+									><i class="fas fa-trash-alt fa-1x"></i> Eliminar</a>
 							</div>
 						</td>
 					</tr>
@@ -207,11 +190,11 @@
 								</div>
 								<div class="form-group">
 									<label for="precio" class="col-form-label">Precio:</label>
-									<textarea class="form-control" id="precio"></textarea>
+									<textarea class="form-control" id="precio-producto"></textarea>
 								</div>
 								<div class="form-group">
 									<label for="descripcion" class="col-form-label">Descripción:</label>
-									<textarea class="form-control" id="descripcion"></textarea>
+									<textarea class="form-control" id="descripcion-producto"></textarea>
 								</div>
 							</form>
 						</div>
