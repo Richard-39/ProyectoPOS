@@ -31,7 +31,7 @@ public class ProductoController {
 		return modelAndView;
 	}
 
-	@PostMapping("/crear")
+	@PostMapping("/guardar")
 	public RedirectView crearProducto(@ModelAttribute Producto producto) {
 		productoDao.save(producto);
 		return new RedirectView("/productos/administrar");

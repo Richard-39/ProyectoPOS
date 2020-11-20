@@ -32,15 +32,13 @@
 <script src="https://kit.fontawesome.com/50b91961d5.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript">
-	function setInformation(idProducto, nombre, precio, descripcion){
+	function setInformation(idProducto, nombre, precio, descripcion) {
 		document.getElementById("id-producto").value = idProducto;
 		document.getElementById("nombre-producto").value = nombre;
 		document.getElementById("precio-producto").value = precio;
 		document.getElementById("descripcion-producto").value = descripcion;
 		$('#editarModal').modal();
 	}
-	
-	
 </script>
 </head>
 <body>
@@ -114,13 +112,13 @@
 							<div class="btn-group">
 								<button type="button"
 									class="btn btn-secondary btn-rounded btn-sm m-0"
-									
-									th:onclick="setInformation([[${producto.idProducto}]], [[${producto.nombre}]], [[${producto.precio}]], [[${producto.descripcion}]])"
-									><i class="fas fa-edit fa-1x"></i> Editar</button>
+									th:onclick="setInformation([[${producto.idProducto}]], [[${producto.nombre}]], [[${producto.precio}]], [[${producto.descripcion}]])">
+									<i class="fas fa-edit fa-1x"></i> Editar
+								</button>
 
-								<a th:href="@{/productos/eliminar?id=}+${producto.idProducto}" type="button"
-									class="btn btn-danger btn-rounded btn-sm m-0"
-									><i class="fas fa-trash-alt fa-1x"></i> Eliminar</a>
+								<a th:href="@{/productos/eliminar?id=}+${producto.idProducto}"
+									type="button" class="btn btn-danger btn-rounded btn-sm m-0"><i
+									class="fas fa-trash-alt fa-1x"></i> Eliminar</a>
 							</div>
 						</td>
 					</tr>
@@ -139,7 +137,7 @@
 							</button>
 						</div>
 
-						<form th:action="@{/productos/crear}" method="post"
+						<form th:action="@{/productos/guardar}" method="post"
 							th:object="${producto}">
 							<div class="modal-body">
 								<div class="form-group">
@@ -178,63 +176,38 @@
 								<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
-						<div class="modal-body">
-							<form>
+						<form th:action="@{/productos/guardar}" method="post"
+							th:object="${producto}">
+							<div class="modal-body">
 								<div class="form-group">
 									<label for="id-producto" class="col-form-label">ID:</label> <input
-										type="text" class="form-control" id="id-producto" readonly>
+										type="text" class="form-control" id="id-producto"
+										name="idProducto" readonly>
 								</div>
 								<div class="form-group">
 									<label for="nombre-producto" class="col-form-label">Nombre:</label>
-									<textarea class="form-control" id="nombre-producto"></textarea>
+									<input class="form-control" id="nombre-producto" name="nombre">
 								</div>
 								<div class="form-group">
-									<label for="precio" class="col-form-label">Precio:</label>
-									<textarea class="form-control" id="precio-producto"></textarea>
+									<label for="precio" class="col-form-label">Precio:</label> <input
+										class="form-control" id="precio-producto" name="precio">
 								</div>
 								<div class="form-group">
 									<label for="descripcion" class="col-form-label">Descripción:</label>
-									<textarea class="form-control" id="descripcion-producto"></textarea>
+									<input class="form-control" id="descripcion-producto"
+										name="descripcion">
 								</div>
-							</form>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary"
-								data-dismiss="modal">Cerrar</button>
-							<button type="button" class="btn btn-primary">Editar</button>
-						</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Cerrar</button>
+								<button type="submit" class="btn btn-primary">Editar</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-<!-- 			<div class="modal fade" id="eliminarModal" tabindex="-1" -->
-<!-- 				aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-<!-- 				<div class="modal-dialog"> -->
-<!-- 					<div class="modal-content"> -->
-<!-- 						<div class="modal-header"> -->
-<!-- 							<h5 class="modal-title" id="exampleModalLabel">Eliminar -->
-<!-- 								Producto</h5> -->
-<!-- 							<button type="button" class="close" data-dismiss="modal" -->
-<!-- 								aria-label="Close"> -->
-<!-- 								<span aria-hidden="true">&times;</span> -->
-<!-- 							</button> -->
-<!-- 						</div> -->
-<!-- 						<div class="modal-body"> -->
-<!-- 							<form> -->
-<!-- 								<div class="form-group"> -->
-<!-- 									<label for="id-producto" class="col-form-label">Está -->
-<!-- 										seguro que desea eliminar el siguiente producto?</label> <input -->
-<!-- 										th:text=${producto.nombre} readonly> -->
-<!-- 								</div> -->
-<!-- 							</form> -->
-<!-- 						</div> -->
-<!-- 						<div class="modal-footer"> -->
-<!-- 							<button type="button" class="btn btn-secondary" -->
-<!-- 								data-dismiss="modal">Cerrar</button> -->
-<!-- 							<button type="button" class="btn btn-primary" >Eliminar</button> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-<!-- 			</div> -->
+
 		</div>
 	</div>
 
