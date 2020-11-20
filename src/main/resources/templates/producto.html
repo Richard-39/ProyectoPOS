@@ -39,17 +39,18 @@
 				class="fas fa-shopping-cart fa-1x"></i> Pagar</a>
 		</div>
 	</nav>
+	
 	<div class="container mt-4">
 
 		<div class="my-5">
 			<h3 class="mb-3">Listado de Productos</h3>
-			<!-- 	<form th:action="@{}" method="get"> -->
+			
 
-			<form>
+			<form th:action="@{/productos/disponibles/buscar}" method="post">
 				<div class="row">
 					<div class="col-11 pr-0">
 						<input class="form-control" type="text"
-							placeholder="Buscar por nombre o ID" name="buscar">
+							placeholder="Buscar por nombre o ID" name="criterio">
 					</div>
 					<div class="col-1">
 						<button type="submit" class="btn btn-primary float-right">
@@ -60,7 +61,7 @@
 			</form>
 		</div>
 
-		<!-- 	</form> -->
+		
 
 
 		<div class="row row-cols-1 row-cols-lg-4">
@@ -72,8 +73,9 @@
 						<h5 th:text="${producto.nombre}"></h5>
 					</div>
 					<div class="card-body text-secondary">
+						
+						<img th:src="${producto.urlImagen}" class="card-img-top" alt="...">
 						<h5 th:text=" '$'+${producto.precio}"></h5>
-						<img src="..." class="card-img-top" alt="...">
 					</div>
 
 					<div class="card-footer text-secondary">

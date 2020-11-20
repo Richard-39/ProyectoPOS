@@ -57,29 +57,45 @@ public class ProductoController {
 		return "producto";
 	}
 
+	@PostMapping("/disponibles/buscar")
+	public String buscarProductoDisp(@RequestParam String criterio, Model model) {
+		ProductoVO productoVo = null;
+		try {
+			productoVo = productoDao.findById(Integer.parseInt(criterio));
+
+		} catch (Exception e) {
+			productoVo = productoDao.findByNombre(criterio);
+		}
+		model.addAttribute("productos", productoVo.getProductos());
+		model.addAttribute("mensaje", productoVo.getMensaje());
+		model.addAttribute("codigo", productoVo.getCodigo());
+
+		return "producto";
+	}
+
 	@PostMapping("/buscar")
 	public String buscarProducto(@RequestParam String criterio, Model model) {
 		ProductoVO productoVo = null;
 		try {
-		productoVo = productoDao.findById(Integer.parseInt(criterio));
-			
+			productoVo = productoDao.findById(Integer.parseInt(criterio));
+
 		} catch (Exception e) {
 			productoVo = productoDao.findByNombre(criterio);
 		}
-			model.addAttribute("productos", productoVo.getProductos());
-			model.addAttribute("mensaje", productoVo.getMensaje());
-			model.addAttribute("codigo", productoVo.getCodigo());
-		
-			return "administrarProductos";}
-	
+		model.addAttribute("productos", productoVo.getProductos());
+		model.addAttribute("mensaje", productoVo.getMensaje());
+		model.addAttribute("codigo", productoVo.getCodigo());
+
+		return "administrarProductos";
+	}
+
 	@GetMapping("/eliminar")
-	public String eliminarProducto (@RequestParam Integer id) {
+	public String eliminarProducto(@RequestParam Integer id) {
 		ProductoVO productoVo = productoDao.findById(id);
 		System.out.println(productoVo.getProductos().get(0));
 		productoDao.delete(productoVo.getProductos().get(0));
-		
+
 		return "redirect:/productos/administrar";
 	}
-	
 
 }

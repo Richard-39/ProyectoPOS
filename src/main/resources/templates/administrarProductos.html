@@ -32,13 +32,20 @@
 <script src="https://kit.fontawesome.com/50b91961d5.js"
 	crossorigin="anonymous"></script>
 <script type="text/javascript">
-	function setInformation(idProducto, nombre, precio, descripcion) {
+	function setInformation(idProducto, nombre, precio, descripcion, urlImagen) {
 		document.getElementById("id-producto").value = idProducto;
 		document.getElementById("nombre-producto").value = nombre;
 		document.getElementById("precio-producto").value = precio;
 		document.getElementById("descripcion-producto").value = descripcion;
+		document.getElementById("imagen-producto").value = urlImagen;
 		$('#editarModal').modal();
 	}
+	function deleteRow(idProducto){
+			if (confirm("Está seguro de eliminar este producto?")) {
+				window.location.href = "/productos/eliminar?id=" +idProducto;
+			} 				
+		}
+	
 </script>
 </head>
 <body>
@@ -98,7 +105,8 @@
 						<th scope="col">Nombre</th>
 						<th scope="col">Precio</th>
 						<th scope="col">Descripcion</th>
-						<th scope="col" class="text-center">Acción</th>
+						<th scope="col">URL Imagen</th>
+						<th scope="col">Acción</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -106,19 +114,22 @@
 
 						<td th:text="${producto.idProducto}" />
 						<td th:text="${producto.nombre}" />
-						<td th:text="${producto.precio}" />
+						<td th:text="'$'+${producto.precio}" />
 						<td th:text="${producto.descripcion}" />
+						<td th:text="${producto.urlImagen}" />
 						<td>
 							<div class="btn-group">
 								<button type="button"
-									class="btn btn-secondary btn-rounded btn-sm m-0"
-									th:onclick="setInformation([[${producto.idProducto}]], [[${producto.nombre}]], [[${producto.precio}]], [[${producto.descripcion}]])">
-									<i class="fas fa-edit fa-1x"></i> Editar
-								</button>
-
-								<a th:href="@{/productos/eliminar?id=}+${producto.idProducto}"
-									type="button" class="btn btn-danger btn-rounded btn-sm m-0"><i
-									class="fas fa-trash-alt fa-1x"></i> Eliminar</a>
+									class="btn btn-secondary btn-rounded btn-sm mr-2"
+									th:onclick="setInformation([[${producto.idProducto}]], [[${producto.nombre}]], [[${producto.precio}]], [[${producto.descripcion}]], [[${producto.urlImagen}]])">
+									<i class="fas fa-edit fa-1x"></i></button>
+								<button type="button"
+									class="btn btn-danger btn-rounded btn-sm"
+									th:onclick="deleteRow([[${producto.idProducto}]])">
+									<i class="fas fa-trash-alt fa-1x"></i></button>
+<!-- 								<a th:href="@{/productos/eliminar?id=}+${producto.idProducto}" -->
+<!-- 									type="button" class="btn btn-danger btn-rounded btn-sm m-0"><i -->
+<!-- 									class="fas fa-trash-alt fa-1x"></i></a> -->
 							</div>
 						</td>
 					</tr>
@@ -152,6 +163,11 @@
 									<label for="descripcion" class="col-form-label">Descripción:</label>
 									<textarea class="form-control" id="descripcion"
 										name="descripcion"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="urlImagen" class="col-form-label">Url Imagen:</label>
+									<input class="form-control" id="imagen"
+										name="urlImagen">
 								</div>
 
 							</div>
@@ -196,6 +212,11 @@
 									<label for="descripcion" class="col-form-label">Descripción:</label>
 									<input class="form-control" id="descripcion-producto"
 										name="descripcion">
+								</div>
+								<div class="form-group">
+									<label for="urlImagen" class="col-form-label">Url Imagen:</label>
+									<input class="form-control" id="imagen-producto"
+										name="urlImagen">
 								</div>
 							</div>
 							<div class="modal-footer">
