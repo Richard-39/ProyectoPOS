@@ -1,118 +1,150 @@
 <!DOCTYPE html>
 <html xmlns:th="http://thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-	
-	<title>Resumen Pago</title>
+<meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+	integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
+	crossorigin="anonymous"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+	integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+	crossorigin="anonymous"></script>
+
+<title>Resumen Pago</title>
 </head>
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Proyecto POS</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse"
-            data-target="#navbarNav" aria-controls="navbarNav"
-            aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/inicio">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/listarProductos">Productos</a>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="/carroCompra">Carro de Compra</a></li>
-                <li class="nav-item"><a class="nav-link" href="/informes">Informes</a></li>
-            </ul>
-        </div>
-    </nav>
-    
-    <div class="container mt-3">
+		<a class="navbar-brand" href="#">EZ POS</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarNav" aria-controls="navbarNav"
+			aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link"
+					href="/productos/listar">Productos</a></li>
+				<li class="nav-item"><a class="nav-link" href="/carroCompra/">Carro
+						de Compra</a></li>
+				<li class="nav-item"><a class="nav-link" href="/informes">Informes</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/productos/administrar">Administrar Productos</a></li>
+			</ul>
+		</div>
+
+	</nav>
+
+	<div class="container mt-3">
 
 		<div class="card">
-			<div class="card-header"><h4>Resumen Pago</h4></div>
+			<div class="card-header">
+				<h4>Resumen Pago</h4>
+			</div>
 			<div class="card-body">
-			
-			<div class="row">
-  				<div class="col-sm-3">
-  				  <div class="card border-primary mb-3 mx-auto" style="max-width: 14rem;">
-					  <div class="card-header text-center h4">Total</div>
-					  <div class="card-body text-dark">
-					    <h5 class="card-title text-center h2" th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></h5>
-					  </div>
-				  </div>
-  				</div>
-  				
-  				<div class="col-sm-3">
-  				  <div class="card border-warning mb-3 mx-auto" style="max-width: 14rem;">
-					  <div class="card-header text-center h4">Monto Recibido</div>
-					  <div class="card-body text-dark">
-					    <h5 class="card-title text-center h2" th:text="${#numbers.formatInteger(montoPago,3,'POINT')}"></h5>
-					  </div>
-				  </div>
-  				</div>
-  				
-  				<div class="col-sm-3">
-  				  <div class="card border-success mb-3 mx-auto" style="max-width: 14rem;">
-				  <div class="card-header text-center h4">Vuelto</div>
-				  <div class="card-body text-dark">
-				    <h5 class="card-title text-center h2" th:text="${#numbers.formatInteger(vuelto,3,'POINT')}"></h5>
-				  </div>
-				  </div>
-  				</div>
-  				
-  				<div class="col-sm-3">
-	  				<div class="card mx-auto" style="width: 14rem;">
-					  <ul class="list-group list-group-flush">
-					    <li class="list-group-item"><span class="font-weight-bold" th:text="'Fecha: '"/><span th:text="${#dates.format(boleta.fecha, 'dd/MM/yyyy')}"/></li>
-					    <li class="list-group-item"><span class="font-weight-bold" th:text="'Forma Pago: '"/><span th:text="${#strings.capitalize(boleta.formaPago)}"/></li>
-					    <li class="list-group-item"><span class="font-weight-bold" th:text="'Id Boleta: '"/><span th:text="${boleta.idBoleta}"/></li>
-					  </ul>
+
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="card border-primary mb-3 mx-auto"
+							style="max-width: 14rem;">
+							<div class="card-header text-center h4">Total</div>
+							<div class="card-body text-dark">
+								<h5 class="card-title text-center h2"
+									th:text="${#numbers.formatInteger(boleta.monto,3,'POINT')}"></h5>
+							</div>
+						</div>
 					</div>
-  				</div>
-  				
-  			</div>	
-  				
-  				<h3 class="mt-2">Items</h3>
+
+					<div class="col-sm-3">
+						<div class="card border-warning mb-3 mx-auto"
+							style="max-width: 14rem;">
+							<div class="card-header text-center h4">Monto Recibido</div>
+							<div class="card-body text-dark">
+								<h5 class="card-title text-center h2"
+									th:text="${#numbers.formatInteger(montoPago,3,'POINT')}"></h5>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="card border-success mb-3 mx-auto"
+							style="max-width: 14rem;">
+							<div class="card-header text-center h4">Vuelto</div>
+							<div class="card-body text-dark">
+								<h5 class="card-title text-center h2"
+									th:text="${#numbers.formatInteger(vuelto,3,'POINT')}"></h5>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-sm-3">
+						<div class="card mx-auto" style="width: 14rem;">
+							<ul class="list-group list-group-flush">
+								<li class="list-group-item"><span class="font-weight-bold"
+									th:text="'Fecha: '" /><span
+									th:text="${#dates.format(boleta.fecha, 'dd/MM/yyyy')}" /></li>
+								<li class="list-group-item"><span class="font-weight-bold"
+									th:text="'Forma Pago: '" /><span
+									th:text="${#strings.capitalize(boleta.formaPago)}" /></li>
+								<li class="list-group-item"><span class="font-weight-bold"
+									th:text="'Id Boleta: '" /><span th:text="${boleta.idBoleta}" /></li>
+							</ul>
+						</div>
+					</div>
+
+				</div>
+
+				<h3 class="mt-2">Items</h3>
 				<table class="table">
-		            <thead class="thead-dark">
-		                <tr>
-		                    <th class="text-center" scope="col">Producto</th>
-		                    <th class="text-center" scope="col">precio</th>
-		                    <th class="text-center" scope="col">Cantidad</th>
-		                    <th class="text-right" scope="col">SubTotal</th> 
-		                </tr>
-		            </thead>
-		            <tbody>
-						<tr th:each="item, itemStat : ${boleta.itemBoleta}">
-						    <td class="w-50" th:text="${item.producto.nombre}"/>
-						    <td class="text-center" th:text="${#numbers.formatInteger(item.producto.precio,3,'POINT')}"/>
-						    <td class="text-center" th:text="${item.cantidad}"/>
-						    <td class="text-right" th:text="${#numbers.formatInteger(item.carcularSubTotal(),3,'POINT')}"/>
+					<thead class="thead-dark">
+						<tr>
+							<th class="text-center" scope="col">Producto</th>
+							<th class="text-center" scope="col">precio</th>
+							<th class="text-center" scope="col">Cantidad</th>
+							<th class="text-right" scope="col">SubTotal</th>
 						</tr>
-		            </tbody>
-		        </table>
-		        
+					</thead>
+					<tbody>
+						<tr th:each="item, itemStat : ${boleta.itemBoleta}">
+							<td class="w-50" th:text="${item.producto.nombre}" />
+							<td class="text-center"
+								th:text="${#numbers.formatInteger(item.producto.precio,3,'POINT')}" />
+							<td class="text-center" th:text="${item.cantidad}" />
+							<td class="text-right"
+								th:text="${#numbers.formatInteger(item.carcularSubTotal(),3,'POINT')}" />
+						</tr>
+					</tbody>
+				</table>
+
 				<div class="text-right">
 					<a href="/listarProductos" class="btn btn-primary">Volver</a>
 				</div>
-				
+
 			</div>
 		</div>
-	
 
 
-	
-	
-	
 
-    
-    </div>
 
-	
+
+
+
+
+	</div>
+
+
 
 </body>
 </html>
