@@ -57,7 +57,7 @@ public class ProductoController {
 		return "producto";
 	}
 
-	@PostMapping("/disponibles/buscar")
+	@GetMapping("/disponibles/buscar")
 	public String buscarProductoDisp(@RequestParam String criterio, Model model) {
 		ProductoVO productoVo = null;
 		try {
@@ -73,7 +73,7 @@ public class ProductoController {
 		return "producto";
 	}
 
-	@PostMapping("/buscar")
+	@GetMapping("/buscar")
 	public String buscarProducto(@RequestParam String criterio, Model model) {
 		ProductoVO productoVo = null;
 		try {
