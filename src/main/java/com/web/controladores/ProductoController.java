@@ -1,5 +1,8 @@
 package com.web.controladores;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,9 +54,15 @@ public class ProductoController {
 	public String producto(Model model) {
 		model.addAttribute("titulo", "Listado de productos");
 		ProductoVO productoVo = productoDao.findAll();
-		model.addAttribute("productos", productoVo.getProductos());
-		model.addAttribute("mensaje", productoVo.getMensaje());
-		model.addAttribute("codigo", productoVo.getCodigo());
+		List<Producto> productosDisp = new ArrayList<>();
+		for (Producto producto : productoVo.getProductos()) {
+			if (producto.getDisponibilidad()) {
+				productosDisp.add(producto);
+			}
+		}
+		model.addAttribute("productos", productosDisp);
+		model.addAttribute("cantProductos", productosDisp.size());
+		
 		return "producto";
 	}
 

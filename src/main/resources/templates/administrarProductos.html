@@ -38,24 +38,20 @@
 		document.getElementById("precio-producto").value = precio;
 		document.getElementById("descripcion-producto").value = descripcion;
 		document.getElementById("imagen-producto").value = urlImagen;
+
 		$('#editarModal').modal();
 	}
-	function deleteRow(idProducto){
-			if (confirm("Está seguro de eliminar este producto?")) {
-				window.location.href = "/productos/eliminar?id=" +idProducto;
-			} 				
+	function deleteRow(idProducto) {
+		if (confirm("Está seguro de eliminar este producto?")) {
+			window.location.href = "/productos/eliminar?id=" + idProducto;
 		}
-	
+	}
 </script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">EZ POS</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			data-target="#navbarNav" aria-controls="navbarNav"
-			aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<img th:src="@{/img/caja-30x30.png}"> <a
+			class="navbar-brand ml-1">EZ POS</a>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link"
@@ -103,6 +99,7 @@
 						<th scope="col">Precio</th>
 						<th scope="col">Descripcion</th>
 						<th scope="col">URL Imagen</th>
+						<th scope="col">Disponibilidad</th>
 						<th scope="col">Acción</th>
 					</tr>
 				</thead>
@@ -111,19 +108,23 @@
 
 						<td th:text="${producto.idProducto}" />
 						<td th:text="${producto.nombre}" />
-						<td th:text="${producto.precio > 999} ? '$' + ${#numbers.formatInteger(producto.precio,3,'POINT')} : '$' + ${producto.precio}"/>
+						<td
+							th:text="${producto.precio > 999} ? '$' + ${#numbers.formatInteger(producto.precio,3,'POINT')} : '$' + ${producto.precio}" />
 						<td th:text="${producto.descripcion}" />
 						<td th:text="${producto.urlImagen}" />
+						<td
+							th:text="${producto.disponibilidad} ? 'Disponible' : 'No Disponible'" />
 						<td>
 							<div class="btn-group">
 								<button type="button"
 									class="btn btn-secondary btn-rounded btn-sm mr-2"
 									th:onclick="setInformation([[${producto.idProducto}]], [[${producto.nombre}]], [[${producto.precio}]], [[${producto.descripcion}]], [[${producto.urlImagen}]])">
-									<i class="fas fa-edit fa-1x"></i></button>
-								<button type="button"
-									class="btn btn-danger btn-rounded btn-sm"
+									<i class="fas fa-edit fa-1x"></i>
+								</button>
+								<button type="button" class="btn btn-danger btn-rounded btn-sm"
 									th:onclick="deleteRow([[${producto.idProducto}]])">
-									<i class="fas fa-trash-alt fa-1x"></i></button>
+									<i class="fas fa-trash-alt fa-1x"></i>
+								</button>
 							</div>
 						</td>
 					</tr>
@@ -159,9 +160,17 @@
 										name="descripcion"></textarea>
 								</div>
 								<div class="form-group">
-									<label for="urlImagen" class="col-form-label">Url Imagen:</label>
-									<input class="form-control" id="imagen"
+									<label for="urlImagen" class="col-form-label">Url
+										Imagen:</label> <input class="form-control" id="imagen"
 										name="urlImagen">
+								</div>
+								<div class="form-group">
+									<label for="disponibilidad" class="col-form-label">Disponibilidad:</label>
+									<select name="disponibilidad" class="custom-select">
+										<option selected value=1>Disponible</option>
+										<option value=0>No Disponible</option>
+									</select>
+
 								</div>
 
 							</div>
@@ -208,9 +217,18 @@
 										name="descripcion">
 								</div>
 								<div class="form-group">
-									<label for="urlImagen" class="col-form-label">Url Imagen:</label>
-									<input class="form-control" id="imagen-producto"
+									<label for="urlImagen" class="col-form-label">Url
+										Imagen:</label> <input class="form-control" id="imagen-producto"
 										name="urlImagen">
+								</div>
+								<div class="form-group">
+									<label for="disponibilidad" class="col-form-label">Disponibilidad:</label>
+									<select id="disponibilidad-producto" name="disponibilidad"
+										class="custom-select">
+										<option selected value=1>Disponible</option>
+										<option value=0>No Disponible</option>
+									</select>
+
 								</div>
 							</div>
 							<div class="modal-footer">

@@ -53,7 +53,8 @@
 				<li class="nav-item active"><a class="nav-link"
 					href="/carroCompra">Carro de Compra</a></li>
 				<li class="nav-item"><a class="nav-link" href="/informes">Informes</a></li>
-				<li class="nav-item"><a class="nav-link" href="/productos/administrar">Administrar Productos</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/productos/administrar">Administrar Productos</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -93,6 +94,7 @@
 								</tr>
 							</tbody>
 						</table>
+						
 						<h3 class="text-right" th:text="'Total' + ' ' + ${total}"></h3>
 						<div class="col-sm-3 p-0">
 							<table class="table border border-dark">
@@ -118,7 +120,7 @@
 												<input class="form-check-input" type="radio"
 													name="formaPago" id="debito" value="debito"
 													onclick="hideMontoPago()"> <label
-													class="form-check-label" for="debito">Debito</label>
+													class="form-check-label" for="debito">Débito</label>
 											</div>
 										</td>
 									</tr>
@@ -138,22 +140,24 @@
 								</tbody>
 							</table>
 						</div>
-						
-						
-							<div class="row my-5" id="montoPago">
-								<div class="col-sm-3">
-									<label class="form-check-label font-weight-bold" for="montoPago">Monto
-										Pago</label>
-								</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control" name="montoPago">
-								</div>
-							</div>
-						
-						
 
-						<button type="submit" class="btn btn-primary float-right">Confirmar
-							Pago</button>
+
+						<div class="row my-5" id="montoPago">
+							<div class="col-sm-3">
+								<label class="form-check-label font-weight-bold" for="montoPago">Monto
+									Pago</label>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" name="montoPago">
+							</div>
+						</div>
+
+
+						<div class="btn-group float-right">
+							<a href="/carroCompra/vaciar" type="button" class="btn btn-danger mr-2">Vaciar Carro</a>
+							<button type="submit" class="btn btn-primary">Confirmar
+								Pago</button>
+						</div>
 					</fieldset>
 				</form>
 </body>
