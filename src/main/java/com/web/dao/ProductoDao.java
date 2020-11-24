@@ -8,5 +8,5 @@ import com.web.modelo.Producto;
 
 public interface ProductoDao extends JpaRepository<Producto, Integer>{
 
-	public List<Producto> findByNombreLike(String nombre);
+	public List<Producto> findByNombreContaining(String nombre);
 }

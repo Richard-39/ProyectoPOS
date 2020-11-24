@@ -30,6 +30,8 @@ public class Producto implements Serializable {
 	    private String nombre;
 	    private Integer precio;
 	    private String descripcion;
+	    private String urlImagen;
+	    private Boolean disponibilidad;
 
 		private static final long serialVersionUID = 1L;
 	}

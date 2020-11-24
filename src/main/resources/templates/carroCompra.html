@@ -40,7 +40,7 @@
 <body>
 
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">Proyecto POS</a>
+		<a class="navbar-brand" href="#">EZ POS</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navbarNav" aria-controls="navbarNav"
 			aria-expanded="false" aria-label="Toggle navigation">
@@ -53,7 +53,8 @@
 				<li class="nav-item active"><a class="nav-link"
 					href="/carroCompra">Carro de Compra</a></li>
 				<li class="nav-item"><a class="nav-link" href="/informes">Informes</a></li>
-				<li class="nav-item"><a class="nav-link" href="/productos/administrar">Administrar Productos</a></li>
+				<li class="nav-item"><a class="nav-link"
+					href="/productos/administrar">Administrar Productos</a></li>
 			</ul>
 		</div>
 	</nav>
@@ -93,7 +94,9 @@
 								</tr>
 							</tbody>
 						</table>
+
 						<h3 class="text-right" th:text="${total > 999} ? ${'Total: ' + #numbers.formatInteger(total,3,'POINT')} : ${'Total: ' + total}"></h3>
+
 						<div class="col-sm-3 p-0">
 							<table class="table border border-dark">
 								<thead class="thead-dark">
@@ -118,7 +121,7 @@
 												<input class="form-check-input" type="radio"
 													name="formaPago" id="debito" value="debito"
 													onclick="hideMontoPago()"> <label
-													class="form-check-label" for="debito">Debito</label>
+													class="form-check-label" for="debito">Débito</label>
 											</div>
 										</td>
 									</tr>
@@ -138,22 +141,24 @@
 								</tbody>
 							</table>
 						</div>
-						
-						
-							<div class="row my-5" id="montoPago">
-								<div class="col-sm-3">
-									<label class="form-check-label font-weight-bold" for="montoPago">Monto
-										Pago</label>
-								</div>
-								<div class="col-sm-3">
-									<input type="text" class="form-control" name="montoPago">
-								</div>
-							</div>
-						
-						
 
-						<button type="submit" class="btn btn-primary float-right">Confirmar
-							Pago</button>
+
+						<div class="row my-5" id="montoPago">
+							<div class="col-sm-3">
+								<label class="form-check-label font-weight-bold" for="montoPago">Monto
+									Pago</label>
+							</div>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" name="montoPago">
+							</div>
+						</div>
+
+
+						<div class="btn-group float-right">
+							<a href="/carroCompra/vaciar" type="button" class="btn btn-danger mr-2">Vaciar Carro</a>
+							<button type="submit" class="btn btn-primary">Confirmar
+								Pago</button>
+						</div>
 					</fieldset>
 				</form>
 </body>
