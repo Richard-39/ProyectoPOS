@@ -4,8 +4,7 @@ HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
-!**/src/test/**/target/
-src/main/resources/database.properties
+!**/src/test/**/target/s
 
 
 ### STS ###
