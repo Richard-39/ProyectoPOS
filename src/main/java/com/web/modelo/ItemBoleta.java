@@ -3,6 +3,11 @@ package com.web.modelo;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.PositiveOrZero;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,9 +40,9 @@ public class ItemBoleta implements Serializable {
     @JoinColumn(name="id_producto")
     private Producto producto;
     
+    
     @Column(name = "cantidad")
     private Integer cantidad;
-
 	public ItemBoleta() {
 		super();
 	}
