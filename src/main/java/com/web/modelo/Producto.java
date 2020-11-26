@@ -6,6 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -27,10 +30,22 @@ public class Producto implements Serializable {
 	    @Column(name = "id_producto")
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Integer idProducto;
+		
+		@NotEmpty
+		@NotBlank
+		@Size(min = 3, max = 20)
 	    private String nombre;
+		
+		@NotEmpty
 	    private Integer precio;
+		
+		@NotEmpty
 	    private String descripcion;
+		
+		@NotEmpty
 	    private String urlImagen;
+		
+		@NotEmpty
 	    private Boolean disponibilidad;
 
 		private static final long serialVersionUID = 1L;

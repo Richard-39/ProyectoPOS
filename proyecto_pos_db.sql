@@ -14,6 +14,8 @@ create table producto(
     nombre varchar(70) not null,
     precio int not null,
     descripcion varchar(100),
+	url_imagen varchar(100),
+    disponibilidad boolean,
     constraint pk_producto primary key (id_producto)
 );
 
@@ -28,11 +30,13 @@ create table item_boleta(
 );
 
 -- productos
-INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Cocaloca 1 LT retornable', '1990', 'Bebida de fantasía');
-INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Galletas triton 10 un.', '990', 'Galleta sabor chocolate');
-INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Chocolate trensito 300 g', '1490', 'Chocolate sucedaneo a base de manteca');
-INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Pan ideal 20 un.', '2390', 'Bolsa de pan de molde');
-INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`) VALUES ('Ramitas de queso', '500', 'Bolsa de 30 gr');
+
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`, `url_imagen`, `disponibilidad`) VALUES ('Cocaloca 1 LT retornable', '1990', 'Bebida de fantasía', 'https://bit.ly/3lavmli', 1);
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`, `url_imagen`, `disponibilidad`) VALUES ('Galletas triton 10 un.', '990', 'Galleta sabor chocolate', 'https://bit.ly/2JcCUGx', 1);
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`, `url_imagen`, `disponibilidad`) VALUES ('Chocolate trensito 300 g', '1490', 'Chocolate sucedaneo a base de manteca', 'https://bit.ly/3m4FDk6', 1);
+INSERT INTO `proyecto_pos`.`producto` (`nombre`, `precio`, `descripcion`, `url_imagen`, `disponibilidad`) VALUES ('Pan ideal 20 un.', '2390', 'Bolsa de pan de molde', 'https://bit.ly/364tbeo', 1);
+
+
 -- boletas
 INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-19', '1990');
 INSERT INTO `proyecto_pos`.`boleta` (`fecha`, `monto`) VALUES ('2020-10-18', '1980');

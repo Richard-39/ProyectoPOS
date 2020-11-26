@@ -48,12 +48,24 @@ public class CarroCompraControlador {
 	}
 
 	@GetMapping("/agregarCarro")
-	public String agregarCarro(@RequestParam Integer idProducto, @RequestParam Integer cantidad, Model model) {
+	public String agregarCarro(@RequestParam Integer idProducto, @RequestParam(defaultValue = "1") String cantidad, Model model) {
+		
+		if (cantidad == null) {
+			return "redirect:/productos/listar";
+		}
+		
+		Integer cantidadRecibida = 0;
+		try {
+			cantidadRecibida = Integer.parseInt(cantidad);
+		} catch (Exception e) {
+			return "redirect:/productos/listar";
+		}
+		
 		ProductoVO productoVo = productoServicio.findById(idProducto);
 		Producto producto = productoVo.getProductos().get(0);
 		ItemBoleta itemBoleta = new ItemBoleta();
 		itemBoleta.setProducto(producto);
-		itemBoleta.setCantidad(cantidad);
+		itemBoleta.setCantidad(cantidadRecibida);
 		carroCompraServicio.agregarItem(itemBoleta);
 		System.out.println(carroCompraServicio.obtenerItems());
 	
