@@ -69,6 +69,7 @@
 
 		<div class="my-5">
 			<h3 class="mb-3">Administrar Productos</h3>
+			<h3 th:if="${error != null}" th:text="${error}"></h3>
 			<div class="row">
 				<div class="col-12">
 					<button type="button" class="btn btn-success float-right mb-3"
@@ -78,7 +79,7 @@
 
 				</div>
 			</div>
-			<form th:action="@{/productos/buscar}" method="post">
+			<form th:action="@{/productos/buscar}" method="get">
 				<div class="row">
 					<div class="col-11 pr-0">
 						<input class="form-control" type="text"
@@ -148,25 +149,25 @@
 							<div class="modal-body">
 								<div class="form-group">
 									<label for="nombre-producto" class="col-form-label">Nombre:</label>
-									<textarea class="form-control" id="nombre" name="nombre"></textarea>
+									<input class="form-control" id="nombre" name="nombre" required></input>
 								</div>
 								<div class="form-group">
 									<label for="precio" class="col-form-label">Precio:</label>
-									<textarea class="form-control" id="precio" name="precio"></textarea>
+									<input class="form-control" id="precio" name="precio" required></input>
 								</div>
 								<div class="form-group">
 									<label for="descripcion" class="col-form-label">Descripción:</label>
-									<textarea class="form-control" id="descripcion"
-										name="descripcion"></textarea>
+									<input class="form-control" id="descripcion"
+										name="descripcion" required></input>
 								</div>
 								<div class="form-group">
 									<label for="urlImagen" class="col-form-label">Url
 										Imagen:</label> <input class="form-control" id="imagen"
-										name="urlImagen">
+										name="urlImagen" required>
 								</div>
 								<div class="form-group">
 									<label for="disponibilidad" class="col-form-label">Disponibilidad:</label>
-									<select name="disponibilidad" class="custom-select">
+									<select name="disponibilidad" class="custom-select" required>
 										<option selected value=1>Disponible</option>
 										<option value=0>No Disponible</option>
 									</select>
