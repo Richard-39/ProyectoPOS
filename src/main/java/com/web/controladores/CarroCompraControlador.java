@@ -39,13 +39,13 @@ public class CarroCompraControlador {
 	@Autowired
 	ICarroCompra carroCompraServicio;
 
-	@PostConstruct
-	public void prductoInicialCarro() {
-		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(1).getProductos().get(0), 2));
-		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(2).getProductos().get(0), 3));
-		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(3).getProductos().get(0), 1));
-		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(4).getProductos().get(0), 5));
-	}
+//	@PostConstruct
+//	public void prductoInicialCarro() {
+//		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(1).getProductos().get(0), 2));
+//		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(2).getProductos().get(0), 3));
+//		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(3).getProductos().get(0), 1));
+//		carroCompraServicio.agregarItem(new ItemBoleta(productoServicio.findById(4).getProductos().get(0), 5));
+//	}
 
 	@GetMapping("/agregarCarro")
 	public String agregarCarro(@RequestParam Integer idProducto, @RequestParam(defaultValue = "1") String cantidad, Model model) {
