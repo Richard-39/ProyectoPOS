@@ -4,6 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/s
 
+src/main/resources/database.properties
+
 
 ### STS ###
 .apt_generated

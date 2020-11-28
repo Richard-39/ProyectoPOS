@@ -36,7 +36,6 @@ public class Producto implements Serializable {
 		@Size(min = 3, max = 20)
 	    private String nombre;
 		
-		@NotEmpty
 	    private Integer precio;
 		
 		@NotEmpty
@@ -45,7 +44,6 @@ public class Producto implements Serializable {
 		@NotEmpty
 	    private String urlImagen;
 		
-		@NotEmpty
 	    private Boolean disponibilidad;
 
 		private static final long serialVersionUID = 1L;
