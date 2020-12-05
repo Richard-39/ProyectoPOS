@@ -28,20 +28,20 @@ public class Producto implements Serializable {
 
 		@Id
 	    @Column(name = "id_producto")
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Integer idProducto;
 		
-		@NotEmpty
-		@NotBlank
-		@Size(min = 3, max = 20)
+//		@NotEmpty
+//		@NotBlank
+//		@Size(min = 3, max = 20)
 	    private String nombre;
 		
 	    private Integer precio;
 		
-		@NotEmpty
+//		@NotEmpty
 	    private String descripcion;
 		
-		@NotEmpty
+//		@NotEmpty
 	    private String urlImagen;
 		
 	    private Boolean disponibilidad;

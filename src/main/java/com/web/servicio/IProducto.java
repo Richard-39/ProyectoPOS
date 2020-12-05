@@ -11,5 +11,5 @@ public interface IProducto {
 	public ProductoVO update(Producto producto);
 	public ProductoVO delete(Producto producto);
 	public ProductoVO findById(Integer id);
-	
+	public ProductoVO findLastProducto();
 }

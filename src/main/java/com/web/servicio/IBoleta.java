@@ -15,5 +15,5 @@ public interface IBoleta {
 	public BoletaVO delete(Integer id);
 	public BoletaVO findAllByFecha(Date fecha);
 	public BoletaVO findAllByFechaTimeBetween(Date fechaInicial, Date fechaFinal);
-	
+	public BoletaVO findLastBoleta();
 }

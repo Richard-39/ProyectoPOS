@@ -107,4 +107,18 @@ public class ProductoServicioImpl implements IProducto {
 		}
 		return respuesta;
 	}
+	
+	@Override
+	public ProductoVO findLastProducto() {
+		respuesta = new ProductoVO ("Ha ocurrido un error", "107", new ArrayList<Producto>());
+		try {
+			List<Producto> lista = dao.findAll();
+			respuesta.getProductos().add(lista.get(lista.size()-1));
+			respuesta.setMensaje("El producto ha sido encontrado exitosamente");
+			respuesta.setCodigo("0");
+		}catch (Exception e){
+			log.trace("Producto servicio: ha ocurrido un error en findById", e);
+		}
+		return respuesta;
+	}
 }

@@ -117,5 +117,20 @@ public class BoletaServicioImp implements IBoleta{
 		return boletaVo;
 	}
 
+	@Override
+	public BoletaVO findLastBoleta() {
+		BoletaVO boletaVo = new BoletaVO("Ha ocurrido un error", "108", new ArrayList<Boleta>());
+		try {
+			List<Boleta> lista = boletaDao.findAll();
+			boletaVo.getBoletas().add(lista.get(lista.size()-1));
+			boletaVo.setMensaje(String.format("Se han encontrado %d registros", boletaVo.getBoletas().size()));
+			boletaVo.setCodigo("0");
+		} catch (Exception e) {
+			log.info("Se ha encontrado un error en BoletaServicioImp : findLastBoleta " + e);
+			}
+		return boletaVo;
+	}
+
+
 
 }

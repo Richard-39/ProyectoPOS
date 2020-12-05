@@ -42,19 +42,21 @@ public class ProductoController {
 	}
 
 	@PostMapping("/guardar")
-	public RedirectView crearProducto(@Valid Producto producto, BindingResult result, RedirectAttributes model ) {
+	public RedirectView crearProducto(Producto producto, RedirectAttributes model ) {
 		
 		System.out.println(producto);
-		System.out.println("has errors: " + result.hasErrors());
+//		System.out.println("has errors: " + result.hasErrors());
 		
-		if (result.hasErrors()) {
+//		if (result.hasErrors()) {
 //			Map<String, String> errores = new HashMap<String,String>();
 //			result.getFieldErrors().forEach(err -> {
 //				errores.put(err.getField(), "Error en: ".concat(err.getField()).concat(" ").concat(err.getDefaultMessage()));
 //			});
-			model.addFlashAttribute("error", "hay un error");
-			return new RedirectView("/productos/administrar");
-		}
+//			model.addFlashAttribute("error", "hay un error");
+//			return new RedirectView("/productos/administrar");
+//		}
+		
+		producto.setIdProducto(productoDao.findLastProducto().getProductos().get(0).getIdProducto() + 1);
 		
 		productoDao.save(producto);
 		return new RedirectView("/productos/administrar");

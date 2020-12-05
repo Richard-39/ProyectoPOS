@@ -110,6 +110,9 @@ public class CarroCompraControlador {
 		boleta.setFecha(new Date());
 		boleta.setEstado("emitida");
 		boleta.setMonto(Boleta.calcularMonto(boleta.getItemBoleta()));
+		boleta.setIdBoleta(boletaServicio.findLastBoleta().getBoletas().get(0).getIdBoleta() + 1);
+		
+		System.out.println(boleta);
 
 		if (boleta.getFormaPago().equals("efectivo")) {
 
